@@ -1,2 +1,2 @@
-# helpers.py
-# Helper functions
+def to_dict(obj):
+	return obj.__dict__

@@ -1,2 +1,16 @@
-# requirements.txt
-# List your Python dependencies here
+fastapi
+uvicorn
+openai
+python-docx
+python-multipart
+langchain
+faiss-cpu
+sentence-transformers
+sqlalchemy
+passlib
+bcrypt
+python-jose
+python-dotenv
+pypdf
+requests
+beautifulsoup4

@@ -1,2 +1,7 @@
-# project_schema.py
-# Project schema
+from pydantic import BaseModel
+
+class ProjectCreate(BaseModel):
+	industry: str
+	hazard: str
+	location: str
+	crew: int
