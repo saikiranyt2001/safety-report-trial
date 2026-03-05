@@ -59,7 +59,7 @@ const industry = document.getElementById("industry").value
 const hazard = document.getElementById("hazard").value
 const location = document.getElementById("location").value
 const crew = document.getElementById("crew").value
-const response = await fetch("http://127.0.0.1:8000/generate-report",{
+const response = await fetch("/generate-report",{
 method:"POST",
 headers:{"Content-Type":"application/json"},
 body:JSON.stringify({industry:industry,hazard:hazard,location:location,crew:crew})
