@@ -40,18 +40,6 @@ white-space:pre-wrap;
 </style>
 </head>
 <body>
-<div class="container">
-<h2>AI Safety Report Generator</h2>
-<label>Industry</label>
-<input id="industry" placeholder="Construction">
-<label>Hazard</label>
-<input id="hazard" placeholder="Working at heights">
-<label>Location</label>
-<input id="location" placeholder="Sydney">
-<label>Crew Size</label>
-<input id="crew" type="number" value="5">
-<button onclick="generateReport()">Generate Report</button>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -165,6 +153,7 @@ white-space:pre-wrap;
 		<input id="crew" type="number" value="5">
 		<button onclick="generateReport()">Generate AI Report</button>
 		<div id="result"></div>
+		<button id="downloadPdfBtn" style="margin-top:10px;display:none;" onclick="downloadPDF()">Download PDF</button>
 	</div>
 	<div class="footer">
 		AI Safety Platform © 2026
@@ -186,10 +175,26 @@ white-space:pre-wrap;
 				if (!response.ok) throw new Error("Failed to generate report");
 				const data = await response.json();
 				resultBox.innerText = data.report || "No report generated.";
+				document.getElementById("downloadPdfBtn").style.display = data.report ? "inline-block" : "none";
+				window.generatedReportText = data.report || "";
 			} catch (error) {
 				resultBox.innerText = `Error: ${error.message}`;
+				document.getElementById("downloadPdfBtn").style.display = "none";
 			}
 		}
+
+	// Simple PDF download using jsPDF
+	function downloadPDF() {
+		if (!window.generatedReportText) return;
+		const doc = new window.jspdf.jsPDF();
+		doc.setFontSize(12);
+		doc.text(window.generatedReportText, 10, 10);
+		doc.save("Safety_Report.pdf");
+	}
 	</script>
+</body>
+<!-- jsPDF library for PDF export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</html>
 </body>
 </html>
