@@ -1,9 +1,9 @@
 # report_service.py
 # Report service logic
 
-from ai_safety_platform.backend.agents.research_agent import research_agent
-from ai_safety_platform.backend.agents.draft_agent import draft_document
-from ai_safety_platform.backend.agents.compliance_agent import compliance_check
+from safety_report_trial.backend.agents.research_agent import research_agent
+from safety_report_trial.backend.agents.draft_agent import draft_document
+from safety_report_trial.backend.agents.compliance_agent import compliance_check
 
 def generate_report(industry, hazard):
     laws = research_agent(hazard)

@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from ai_safety_platform.backend.api.routes_reports import router as report_router
+from safety_report_trial.backend.api.routes_reports import router as report_router
 
 app = FastAPI()
 
