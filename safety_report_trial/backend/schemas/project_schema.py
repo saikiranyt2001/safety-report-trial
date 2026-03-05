@@ -1,7 +1,15 @@
 from pydantic import BaseModel
 
-class ProjectCreate(BaseModel):
-	industry: str
-	hazard: str
-	location: str
-	crew: int
+
+class ProjectBase(BaseModel):
+	name: str
+	description: Optional[str] = None
+	company_id: int
+
+class ProjectCreate(ProjectBase):
+	pass
+
+class Project(ProjectBase):
+	id: int
+	class Config:
+		orm_mode = True
