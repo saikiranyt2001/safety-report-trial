@@ -91,6 +91,12 @@
 		Workplace Safety Report Generator
 	</div>
 	<div class="container">
+		<h2>Login</h2>
+		<input id="login-username" placeholder="Username">
+		<input id="login-password" type="password" placeholder="Password">
+		<button onclick="login()">Login</button>
+		<div id="login-result"></div>
+		<hr>
 		<h2>Generate Safety Report</h2>
 		<label>Industry</label>
 		<input id="industry" placeholder="Construction">
@@ -100,17 +106,78 @@
 		<input id="location" placeholder="Sydney">
 		<label>Crew Size</label>
 		<input id="crew" type="number" value="5">
+		<label>Project</label>
+		<select id="project-select"></select>
 		<button onclick="generateReport()">Generate AI Report</button>
 		<div id="result"></div>
 		<button id="downloadPdfBtn" style="margin-top:10px;display:none;" onclick="downloadPDF()">Download PDF</button>
+		<hr>
+		<h2>Report History</h2>
+		<div id="report-history"></div>
+		<hr>
+		<h2>Analytics</h2>
+		<div id="analytics"></div>
+		<hr>
+		<h2>AI Assistant</h2>
+		<input id="chat-input" placeholder="Ask a safety question...">
+		<button onclick="sendChat()">Send</button>
+		<div id="chat-result"></div>
 	</div>
 	<div class="footer">
 		AI Safety Platform © 2026
 	</div>
 	<script>
 		// Set your backend URL here. For local: "/generate-report". For deployed: "https://your-backend-url/generate-report"
-		const BACKEND_URL = "/generate-report";
+		let accessToken = "";
+		let selectedProjectId = 1;
 
+		async function login() {
+			const username = document.getElementById("login-username").value;
+			const password = document.getElementById("login-password").value;
+			const resultBox = document.getElementById("login-result");
+			resultBox.innerHTML = "<div class='loading'>Logging in...</div>";
+			try {
+				const response = await fetch("/login", {
+					method: "POST",
+					headers: { "Content-Type": "application/x-www-form-urlencoded" },
+					body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
+				});
+				const data = await response.json();
+				if (data.access_token) {
+					accessToken = data.access_token;
+					resultBox.innerText = "Login successful!";
+					loadProjects();
+					loadAnalytics();
+				} else {
+					resultBox.innerText = "Login failed.";
+				}
+			} catch (error) {
+				resultBox.innerText = `Error: ${error.message}`;
+			}
+		}
+
+		async function loadProjects() {
+			// For demo, use company_id=1
+			const response = await fetch(`/projects/1`);
+			const projects = await response.json();
+			const select = document.getElementById("project-select");
+			select.innerHTML = "";
+			projects.forEach(p => {
+				const opt = document.createElement("option");
+				opt.value = p.id;
+				opt.text = p.name;
+				select.appendChild(opt);
+			});
+			if (projects.length) {
+				selectedProjectId = projects[0].id;
+				select.value = selectedProjectId;
+				select.onchange = () => {
+					selectedProjectId = select.value;
+					loadReportHistory();
+				};
+				loadReportHistory();
+			}
+		}
 
 		async function generateReport() {
 			const industry = document.getElementById("industry").value;
@@ -123,33 +190,81 @@
 				const response = await fetch("/generate-report", {
 					method: "POST",
 					headers: {
-						"Content-Type": "application/json"
+						"Content-Type": "application/json",
+						...(accessToken ? { "Authorization": `Bearer ${accessToken}` } : {})
 					},
 					body: JSON.stringify({
 						industry,
 						hazard,
 						location,
-						crew: Number(crew)
+						crew: Number(crew),
+						project_id: selectedProjectId
 					})
 				});
 				const data = await response.json();
 				document.getElementById("result").innerText = data.report;
 				document.getElementById("downloadPdfBtn").style.display = data.report ? "inline-block" : "none";
 				window.generatedReportText = data.report || "";
+				loadReportHistory();
 			} catch (error) {
 				resultBox.innerText = `Error: ${error.message}`;
 				document.getElementById("downloadPdfBtn").style.display = "none";
 			}
 		}
 
-	// Simple PDF download using jsPDF
-	function downloadPDF() {
-		if (!window.generatedReportText) return;
-		const doc = new window.jspdf.jsPDF();
-		doc.setFontSize(12);
-		doc.text(window.generatedReportText, 10, 10);
-		doc.save("Safety_Report.pdf");
-	}
+		async function loadReportHistory() {
+			const historyBox = document.getElementById("report-history");
+			historyBox.innerHTML = "<div class='loading'>Loading report history...</div>";
+			try {
+				const response = await fetch(`/report-history/${selectedProjectId}`);
+				const history = await response.json();
+				if (history.length === 0) {
+					historyBox.innerText = "No reports yet.";
+				} else {
+					historyBox.innerHTML = history.map(r => `<div><b>${new Date(r.created_at).toLocaleString()}</b><br>${r.content}</div><hr>`).join("");
+				}
+			} catch (error) {
+				historyBox.innerText = `Error: ${error.message}`;
+			}
+		}
+
+		async function loadAnalytics() {
+			const analyticsBox = document.getElementById("analytics");
+			analyticsBox.innerHTML = "<div class='loading'>Loading analytics...</div>";
+			try {
+				const response = await fetch(`/analytics/1`);
+				const data = await response.json();
+				analyticsBox.innerHTML = `<b>Total Projects:</b> ${data.total_projects}<br><b>Total Reports:</b> ${data.total_reports}`;
+			} catch (error) {
+				analyticsBox.innerText = `Error: ${error.message}`;
+			}
+		}
+
+		async function sendChat() {
+			const chatInput = document.getElementById("chat-input").value;
+			const chatResult = document.getElementById("chat-result");
+			chatResult.innerHTML = "<div class='loading'>Thinking...</div>";
+			try {
+				const response = await fetch("/chat", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ message: chatInput })
+				});
+				const data = await response.json();
+				chatResult.innerText = data.reply;
+			} catch (error) {
+				chatResult.innerText = `Error: ${error.message}`;
+			}
+		}
+
+		// Simple PDF download using jsPDF
+		function downloadPDF() {
+			if (!window.generatedReportText) return;
+			const doc = new window.jspdf.jsPDF();
+			doc.setFontSize(12);
+			doc.text(window.generatedReportText, 10, 10);
+			doc.save("Safety_Report.pdf");
+		}
 	</script>
 </body>
 <!-- jsPDF library for PDF export -->
