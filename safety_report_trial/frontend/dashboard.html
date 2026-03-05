@@ -51,22 +51,145 @@ white-space:pre-wrap;
 <label>Crew Size</label>
 <input id="crew" type="number" value="5">
 <button onclick="generateReport()">Generate Report</button>
-<div id="result"></div>
-</div>
-<script>
-async function generateReport(){
-const industry = document.getElementById("industry").value
-const hazard = document.getElementById("hazard").value
-const location = document.getElementById("location").value
-const crew = document.getElementById("crew").value
-const response = await fetch("/generate-report",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({industry:industry,hazard:hazard,location:location,crew:crew})
-})
-const data = await response.json()
-document.getElementById("result").innerText = data.report
-}
-</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>AI Safety Platform</title>
+	<style>
+		body {
+			margin: 0;
+			font-family: Arial, Helvetica, sans-serif;
+			background: #f4f6f9;
+		}
+		.navbar {
+			background: #1f2937;
+			color: white;
+			padding: 15px 40px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+		.navbar h2 { margin: 0; }
+		.nav-links a {
+			color: white;
+			margin-left: 20px;
+			text-decoration: none;
+			font-weight: bold;
+		}
+		.nav-links a:hover { color: #60a5fa; }
+		.hero {
+			background: url("https://images.unsplash.com/photo-1581093588401-12d9c6d1f3c4") center/cover;
+			height: 220px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: white;
+			font-size: 30px;
+			font-weight: bold;
+		}
+		.container {
+			background: white;
+			padding: 40px;
+			border-radius: 12px;
+			max-width: 650px;
+			margin: -60px auto 40px auto;
+			box-shadow: 0px 5px 20px rgba(0,0,0,0.1);
+		}
+		label { font-weight: bold; }
+		input, select {
+			width: 100%;
+			padding: 12px;
+			margin-top: 6px;
+			margin-bottom: 18px;
+			border-radius: 6px;
+			border: 1px solid #ccc;
+			font-size: 14px;
+		}
+		button {
+			width: 100%;
+			padding: 14px;
+			background: #2563eb;
+			color: white;
+			border: none;
+			border-radius: 6px;
+			font-size: 16px;
+			cursor: pointer;
+		}
+		button:hover { background: #1d4ed8; }
+		#result {
+			margin-top: 20px;
+			background: #f1f5f9;
+			padding: 15px;
+			border-radius: 8px;
+			white-space: pre-wrap;
+		}
+		.footer {
+			background: #1f2937;
+			color: white;
+			text-align: center;
+			padding: 20px;
+			margin-top: 40px;
+		}
+		.loading {
+			text-align: center;
+			font-weight: bold;
+			color: #2563eb;
+		}
+	</style>
+</head>
+<body>
+	<div class="navbar">
+		<h2>AI Safety Platform</h2>
+		<div class="nav-links">
+			<a href="#">Home</a>
+			<a href="#">Generate Report</a>
+			<a href="#">Compliance</a>
+			<a href="#">About</a>
+		</div>
+	</div>
+	<div class="hero">
+		Workplace Safety Report Generator
+	</div>
+	<div class="container">
+		<h2>Generate Safety Report</h2>
+		<label>Industry</label>
+		<input id="industry" placeholder="Construction">
+		<label>Hazard</label>
+		<input id="hazard" placeholder="Working at heights">
+		<label>Location</label>
+		<input id="location" placeholder="Sydney">
+		<label>Crew Size</label>
+		<input id="crew" type="number" value="5">
+		<button onclick="generateReport()">Generate AI Report</button>
+		<div id="result"></div>
+	</div>
+	<div class="footer">
+		AI Safety Platform © 2026
+	</div>
+	<script>
+		async function generateReport() {
+			const resultBox = document.getElementById("result");
+			resultBox.innerHTML = "<div class='loading'>Generating AI Safety Report...</div>";
+			const industry = document.getElementById("industry").value;
+			const hazard = document.getElementById("hazard").value;
+			const location = document.getElementById("location").value;
+			const crew = document.getElementById("crew").value;
+			try {
+				const response = await fetch("/generate-report", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ industry, hazard, location, crew })
+				});
+				if (!response.ok) throw new Error("Failed to generate report");
+				const data = await response.json();
+				resultBox.innerText = data.report || "No report generated.";
+			} catch (error) {
+				resultBox.innerText = `Error: ${error.message}`;
+			}
+		}
+	</script>
 </body>
 </html>
