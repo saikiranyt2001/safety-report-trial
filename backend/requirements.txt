@@ -1,0 +1,17 @@
+fastapi
+uvicorn
+openai
+python-docx
+python-multipart
+langchain
+faiss-cpu
+sentence-transformers
+sqlalchemy
+passlib
+bcrypt
+python-jose
+python-dotenv
+pypdf
+requests
+beautifulsoup4
+prometheus-fastapi-instrumentator
