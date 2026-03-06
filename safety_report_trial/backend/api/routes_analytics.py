@@ -1,15 +1,17 @@
-# Safety KPI Analytics API
 from fastapi import APIRouter
+from sqlalchemy.orm import Session
+from backend.database.database import SessionLocal
+from backend.database.models import Report
 
-router = APIRouter()
+router = APIRouter(tags=["Analytics"])
 
 @router.get("/analytics/safety-metrics")
 def get_safety_metrics():
-    # Dummy metrics for demo
+    db = SessionLocal()
+    total_reports = db.query(Report).count()
+    high_risk = db.query(Report).filter(Report.severity >= 4).count()
+    db.close()
     return {
-        "total_hazards": 12,
-        "high_risk": 3,
-        "compliance_score": 87,
-        "near_misses": 2,
-        "incident_rate": 0.08
+        "total_reports": total_reports,
+        "high_risk_reports": high_risk
     }
