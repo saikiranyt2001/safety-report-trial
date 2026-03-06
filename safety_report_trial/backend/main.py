@@ -11,23 +11,25 @@ from backend.api.routes_validation import router as validation_router
 
 app = FastAPI(title="AI Safety Platform")
 
+# OpenAI key
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # change later for production
+    allow_origins=["*"],  # change for production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Routers
+# API Routers
 app.include_router(report_router)
 app.include_router(analytics_router)
 app.include_router(admin_router)
 app.include_router(uploads_router)
 app.include_router(validation_router)
+
 
 @app.get("/")
 def home():
