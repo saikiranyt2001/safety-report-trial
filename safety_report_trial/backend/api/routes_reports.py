@@ -15,18 +15,18 @@ async def get_safety_kpis():
     total_hazards = db.query(Report).count()
     high_risk_hazards = db.query(Report).filter((Report.severity * Report.likelihood) >= 3).count()
     near_misses = db.query(Report).filter(Report.content.ilike('%near miss%')).count()
-        # Compliance score calculation
-        audits_total = db.query(Audit).count()
-        audits_completed = db.query(Audit).filter(Audit.completed == 1).count()
-        checklist_total = db.query(ChecklistItem).count()
-        checklist_completed = db.query(ChecklistItem).filter(ChecklistItem.completed == 1).count()
-        reg_total = db.query(RegulatoryRequirement).count()
-        reg_met = db.query(RegulatoryRequirement).filter(RegulatoryRequirement.met == 1).count()
+    # Compliance score calculation
+    audits_total = db.query(Audit).count()
+    audits_completed = db.query(Audit).filter(Audit.completed == 1).count()
+    checklist_total = db.query(ChecklistItem).count()
+    checklist_completed = db.query(ChecklistItem).filter(ChecklistItem.completed == 1).count()
+    reg_total = db.query(RegulatoryRequirement).count()
+    reg_met = db.query(RegulatoryRequirement).filter(RegulatoryRequirement.met == 1).count()
 
-        audit_score = (audits_completed / audits_total) * 100 if audits_total else 100
-        checklist_score = (checklist_completed / checklist_total) * 100 if checklist_total else 100
-        reg_score = (reg_met / reg_total) * 100 if reg_total else 100
-        compliance_score = round((audit_score + checklist_score + reg_score) / 3)
+    audit_score = (audits_completed / audits_total) * 100 if audits_total else 100
+    checklist_score = (checklist_completed / checklist_total) * 100 if checklist_total else 100
+    reg_score = (reg_met / reg_total) * 100 if reg_total else 100
+    compliance_score = round((audit_score + checklist_score + reg_score) / 3)
     incident_rate = 0.8   # Placeholder, calculate from incident data
     db.close()
     return {
