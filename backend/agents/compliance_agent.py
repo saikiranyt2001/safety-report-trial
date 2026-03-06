@@ -1,2 +1,27 @@
+# Compliance Agent
+
+COMPLIANCE = {
+    "working at height": [
+        "WHS Regulation 78 – Falls",
+        "ISO 45001 – Occupational Health and Safety"
+    ],
+    "electrical hazard": [
+        "WHS Regulation 150 – Electrical Risks",
+        "AS/NZS 3000 – Electrical Installations"
+    ],
+    "machine entanglement": [
+        "WHS Regulation 208 – Plant Safety",
+        "ISO 12100 – Machinery Safety"
+    ],
+    "chemical exposure": [
+        "WHS Regulation 351 – Hazardous Chemicals",
+        "GHS Chemical Safety Standards"
+    ]
+}
+
 def get_compliance_reference(hazards):
-    return ["OSHA 1910.120", "ISO 45001"]
+    references = []
+    for h in hazards:
+        refs = COMPLIANCE.get(h, ["General WHS Safety Duty"])
+        references.extend(refs)
+    return list(set(references))
