@@ -6,22 +6,22 @@ from pydantic import BaseModel
 import openai
 import os
 from passlib.hash import bcrypt
-from safety_report_trial.backend.api.routes_reports import router as report_router
-from safety_report_trial.backend.api.routes_analytics import router as analytics_router
-from safety_report_trial.backend.api.routes_admin import router as admin_router
-from safety_report_trial.backend.api.routes_uploads import router as uploads_router
-from safety_report_trial.backend.api.routes_validation import router as validation_router
-from safety_report_trial.backend.workflow.inspection_engine import run_safety_workflow
-from safety_report_trial.backend.agents.hazard_agent import identify_hazards
-from safety_report_trial.backend.agents.risk_agent import assess_risk
-from safety_report_trial.backend.agents.compliance_agent import get_compliance_reference
-from safety_report_trial.backend.agents.recommendation_agent import generate_recommendations
-from safety_report_trial.backend.services.report_agent import generate_structured_report
-from safety_report_trial.backend.services.usage_tracker import track_usage
-from safety_report_trial.backend.utils.logger import logger
-from safety_report_trial.backend.auth.jwt_handler import create_access_token, create_refresh_token, verify_refresh_token
-from safety_report_trial.backend.vision.hazard_detector import detect_ppe
-from safety_report_trial.backend.database.models import User, Report, Project, Company
+from backend.api.routes_reports import router as report_router
+from backend.api.routes_analytics import router as analytics_router
+from backend.api.routes_admin import router as admin_router
+from backend.api.routes_uploads import router as uploads_router
+from backend.api.routes_validation import router as validation_router
+from backend.workflow.inspection_engine import run_safety_workflow
+from backend.agents.hazard_agent import identify_hazards
+from backend.agents.risk_agent import assess_risk
+from backend.agents.compliance_agent import get_compliance_reference
+from backend.agents.recommendation_agent import generate_recommendations
+from backend.services.report_agent import generate_structured_report
+from backend.services.usage_tracker import track_usage
+from backend.utils.logger import logger
+from backend.auth.jwt_handler import create_access_token, create_refresh_token, verify_refresh_token
+from backend.vision.hazard_detector import detect_ppe
+from backend.database.models import User, Report, Project, Company
 
 app = FastAPI()
 

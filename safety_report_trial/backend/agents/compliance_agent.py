@@ -1,3 +1,10 @@
+# Add missing get_compliance_reference function
+def get_compliance_reference(hazard):
+    return {
+        "standard": "ISO 45001",
+        "reference": "General Workplace Safety",
+        "hazard": hazard
+    }
 # compliance_agent.py
 # Compliance agent logic
 
