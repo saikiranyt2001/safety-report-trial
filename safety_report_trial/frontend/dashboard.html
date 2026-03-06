@@ -118,10 +118,11 @@
 		<h2>Analytics</h2>
 		<div id="analytics"></div>
 		<hr>
-		<h2>AI Assistant</h2>
+		<h2>Ask Safety AI</h2>
+		<div style="margin-bottom:8px;color:#374151;">AI Safety Advisor answers your workplace safety questions.</div>
 		<input id="chat-input" placeholder="Ask a safety question...">
-		<button onclick="sendChat()">Send</button>
-		<div id="chat-result"></div>
+		<button onclick="sendChat()">Ask</button>
+		<div id="chat-result" style="margin-top:12px;background:#f1f5f9;padding:12px;border-radius:8px;min-height:40px;"></div>
 	</div>
 	<div class="footer">
 		AI Safety Platform © 2026
@@ -245,13 +246,13 @@
 			const chatResult = document.getElementById("chat-result");
 			chatResult.innerHTML = "<div class='loading'>Thinking...</div>";
 			try {
-				const response = await fetch("/chat", {
+				const response = await fetch("/safety-advisor", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify({ message: chatInput })
+					body: JSON.stringify({ question: chatInput })
 				});
 				const data = await response.json();
-				chatResult.innerText = data.reply;
+				chatResult.innerText = data.response || "No answer received.";
 			} catch (error) {
 				chatResult.innerText = `Error: ${error.message}`;
 			}
