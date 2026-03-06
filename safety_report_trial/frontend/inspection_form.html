@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Inspection Form - SafetyAI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{background:#f4f4f4;font-family:Segoe UI,sans-serif;}
+.container{max-width:500px;margin:40px auto;background:white;padding:30px;border-radius:8px;box-shadow:0 4px 24px rgba(0,0,0,0.12);}
+h1{font-size:22px;margin-bottom:18px;}
+label{display:block;margin-top:12px;}
+input,textarea,select{width:100%;padding:10px;margin-top:6px;border-radius:6px;border:1px solid #ccc;}
+button{margin-top:18px;padding:12px;width:100%;background:#ff9800;color:white;border:none;border-radius:6px;font-size:16px;cursor:pointer;}
+button:hover{background:#f57c00;}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Site Inspection Form</h1>
+<form>
+<label>Site Type</label>
+<select required>
+<option value="construction">Construction</option>
+<option value="manufacturing">Manufacturing</option>
+<option value="mining">Mining</option>
+</select>
+<label>Number of Workers</label>
+<input type="number" min="1" required>
+<label>Observed Hazards</label>
+<textarea rows="3" placeholder="Describe hazards..." required></textarea>
+<label>Photos</label>
+<input type="file" accept="image/*" multiple>
+<label>Inspection Notes</label>
+<textarea rows="3" placeholder="Additional notes..."></textarea>
+<button type="submit">Submit Inspection</button>
+</form>
+</div>
+</body>
+</html>

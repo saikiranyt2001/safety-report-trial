@@ -65,6 +65,8 @@ from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
 from fastapi import status
 from fastapi import Body
+from fastapi import File, UploadFile
+from fastapi import Query
 from ..services.report_service import generate_document
 from ..database.models import Report
 from ..database.database import SessionLocal
@@ -81,9 +83,28 @@ router = APIRouter()
 
 
 # Save generated report to DB
-@router.post("/generate-report")
+@router.post(
+    "/generate-report",
+    tags=["Reports"],
+    summary="Generate a safety report",
+    description="Generate a WHS-compliant safety report using AI."
+)
 @limiter.limit("10/minute")
-async def create_report(payload: dict = Body(...)):
+async def create_report(
+    payload: dict = Body(
+        ...,
+        example={
+            "industry": "Construction",
+            "hazard": "Fall from height",
+            "location": "Site A",
+            "crew": "Team Alpha",
+            "project_id": 1,
+            "severity": 4,
+            "likelihood": 5,
+            "user": "admin@company.com"
+        }
+    )
+):
     industry = payload.get("industry", "")
     hazard = payload.get("hazard", "")
     location = payload.get("location", "")
@@ -109,9 +130,41 @@ async def create_report(payload: dict = Body(...)):
     log_audit_action(user=user, action="Generated Safety Report", project_id=project_id)
     return JSONResponse(content={"report": report, "report_id": new_report.id}, status_code=status.HTTP_200_OK)
 
-# Get report history
-@router.get("/report-history/{project_id}")
+@router.get(
+    "/report-history/{project_id}",
+    tags=["Reports"],
+    summary="Get report history",
+    description="Retrieve all reports for a project, ordered by creation date."
+)
 async def get_report_history(project_id: int):
+    # Upload inspection file
+    @router.post(
+        "/upload-inspection",
+        tags=["Inspections"],
+        summary="Upload inspection file",
+        description="Upload an inspection document (PDF, DOCX, etc.) for a project."
+    )
+    async def upload_inspection(
+        project_id: int = Query(..., description="Project ID"),
+        file: UploadFile = File(...)
+    ):
+        # Example: Save file to storage
+        file_location = f"storage/reports/{file.filename}"
+        with open(file_location, "wb") as f:
+            f.write(await file.read())
+        return {"filename": file.filename, "location": file_location}
+
+    # Download report
+    @router.get(
+        "/download-report/{report_id}",
+        tags=["Reports"],
+        summary="Download a safety report",
+        description="Download a generated safety report as a file."
+    )
+    async def download_report(report_id: int):
+        # Example: Return file path (implement file serving as needed)
+        file_path = f"storage/reports/report_{report_id}.pdf"
+        return {"file_path": file_path}
     db = SessionLocal()
     reports = db.query(Report).filter(Report.project_id == project_id).order_by(Report.created_at.desc()).all()
     db.close()

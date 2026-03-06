@@ -1,0 +1,18 @@
+{
+  "construction": [
+    "working at height",
+    "falling objects",
+    "scaffold collapse",
+    "electrical hazard"
+  ],
+  "manufacturing": [
+    "machine entanglement",
+    "chemical exposure",
+    "noise hazard"
+  ],
+  "mining": [
+    "gas exposure",
+    "vehicle collision",
+    "explosion risk"
+  ]
+}
