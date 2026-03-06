@@ -1,7 +1,6 @@
 from fastapi import APIRouter
 from .inspection_service import create_inspection, get_inspections
 from .inspection_schema import Inspection
-from .agent_manager import AgentManager
 from backend.agents.agent_manager import AgentManager
 from backend.agents.hazard_agent import identify_hazards
 from backend.agents.risk_agent import assess_risk
