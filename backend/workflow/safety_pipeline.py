@@ -1,14 +1,16 @@
-def run_safety_workflow(data):
-def identify_hazards(data):
-def assess_risk(hazards):
-def generate_recommendations(hazards):
-def get_compliance_reference(hazards):
+from agents.hazard_agent import identify_hazards
+from agents.risk_agent import assess_risk
+from agents.recommendation_agent import generate_recommendations
+from agents.compliance_agent import get_compliance_reference
+from services.report_service import generate_report
 
-from backend.agents.hazard_agent import identify_hazards
-from backend.agents.risk_agent import assess_risk
-from backend.agents.recommendation_agent import generate_recommendations
-from backend.agents.compliance_agent import get_compliance_reference
-from backend.services.report_service import generate_report
+def run_pipeline(site_data):
+    hazards = identify_hazards(site_data["site_type"])
+    risks = {h: assess_risk(3,4) for h in hazards}
+    controls = {h: generate_recommendations([h]) for h in hazards}
+    compliance = [get_compliance_reference(h) for h in hazards]
+    report = generate_report(site_data, hazards, risks, controls, compliance)
+    return report
 
 def run_safety_workflow(data):
     # Step 1: Inspection input
