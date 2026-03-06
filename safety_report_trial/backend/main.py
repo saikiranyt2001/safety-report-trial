@@ -29,14 +29,14 @@ from backend.database.database import SessionLocal
 from sqlalchemy import func
 from passlib.hash import bcrypt
 
-app = FastAPI()
+app = FastAPI(title="AI Safety Platform")
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://yourdomain.com"],  # Replace with your actual domain
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
