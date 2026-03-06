@@ -1,0 +1,27 @@
+<!-- risk_matrix.html -->
+<!-- Example integration for risk_matrix.js -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Risk Matrix Visualization</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../charts/risk_matrix.js"></script>
+</head>
+<body>
+    <h2>Risk Matrix (Severity vs Likelihood)</h2>
+    <canvas id="riskMatrixCanvas" width="600" height="400"></canvas>
+    <script>
+        const matrixData = {
+            severity: ['Minor', 'Moderate', 'Major', 'Catastrophic'],
+            likelihood: ['Rare', 'Unlikely', 'Possible', 'Likely', 'Almost Certain'],
+            values: [
+                [1, 1, 2, 2, 3],
+                [1, 2, 2, 3, 3],
+                [2, 2, 3, 3, 4],
+                [2, 3, 3, 4, 4]
+            ]
+        };
+        riskMatrixChart('riskMatrixCanvas', matrixData);
+    </script>
+</body>
+</html>

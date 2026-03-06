@@ -1,0 +1,47 @@
+<!-- ai_report_validator.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Report Quality Validator</title>
+  <style>
+    #validationIssues { margin-top: 20px; }
+    #validationIssues li { color: #d32f2f; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h2>Validate AI Safety Report</h2>
+  <textarea id="reportText" rows="8" cols="60" placeholder="Paste AI report here"></textarea><br>
+  <input id="hazards" type="text" placeholder="Hazard list (comma separated)" value="fall,electrical"><br>
+  <input id="regulations" type="text" placeholder="Regulation list (comma separated)" value="WHS-123,WHS-456"><br>
+  <button onclick="validateAIReport()">Validate Report</button>
+  <ul id="validationIssues"></ul>
+
+  <script>
+    function validateAIReport() {
+      const reportText = document.getElementById('reportText').value;
+      const hazardList = document.getElementById('hazards').value.split(',').map(h => h.trim());
+      const regulationList = document.getElementById('regulations').value.split(',').map(r => r.trim());
+      fetch('/api/validate-report', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          report_text: reportText,
+          hazard_list: hazardList,
+          regulation_list: regulationList
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        const issues = data.issues;
+        const issuesContainer = document.getElementById('validationIssues');
+        issuesContainer.innerHTML = issues.length
+          ? issues.map(issue => `<li>${issue}</li>`).join('')
+          : '<li style="color:green;">No issues found.</li>';
+      })
+      .catch(error => {
+        console.error('Validation failed:', error);
+      });
+    }
+  </script>
+</body>
+</html>
