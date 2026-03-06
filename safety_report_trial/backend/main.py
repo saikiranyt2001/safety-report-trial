@@ -104,6 +104,7 @@ async def list_projects(company_id: int):
 
 
 from fastapi import FastAPI
+from prometheus_fastapi_instrumentator import Instrumentator
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from safety_report_trial.backend.api.routes_reports import router as report_router
@@ -111,6 +112,9 @@ from safety_report_trial.backend.api.routes_reports import router as report_rout
 
 
 app = FastAPI()
+
+# Prometheus metrics instrumentation
+Instrumentator().instrument(app).expose(app, endpoint="/metrics")
 
 
 app.add_middleware(

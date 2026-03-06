@@ -2,24 +2,63 @@
 <html>
 <head>
     <title>Report History</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: Arial; background: #f4f6f9; margin: 40px; }
-        .container { background: white; padding: 30px; border-radius: 10px; max-width: 700px; margin: auto; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { padding: 10px; border-bottom: 1px solid #ddd; }
-        th { background: #2563eb; color: white; }
-        tr:hover { background: #f1f5f9; }
-        .download-btn { background: #2563eb; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #f4f6f9; margin: 0; }
+        .container { background: white; padding: 32px 24px; border-radius: 12px; max-width: 900px; margin: 40px auto; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+        h2 { margin-bottom: 24px; color: #2563eb; }
+        .search-bar { display: flex; margin-bottom: 18px; }
+        .search-bar input { flex: 1; padding: 12px; border-radius: 6px 0 0 6px; border: 1px solid #ddd; font-size: 15px; }
+        .search-bar button { padding: 12px 18px; border-radius: 0 6px 6px 0; border: none; background: #2563eb; color: white; font-size: 15px; cursor: pointer; }
+        .search-bar button:hover { background: #1d4ed8; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: left; }
+        th { background: #2563eb; color: white; font-size: 16px; }
+        tr:hover { background: #f1f5f9; transition: background 0.2s; }
+        .download-btn { background: #2563eb; color: white; border: none; padding: 7px 16px; border-radius: 4px; cursor: pointer; font-size: 15px; }
+        .download-btn i { margin-right: 6px; }
+        @media (max-width: 600px) {
+            .container { padding: 12px 4px; }
+            th, td { padding: 8px; font-size: 13px; }
+            h2 { font-size: 20px; }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Report History</h2>
-        <table>
+        <h2><i class="fa-solid fa-file-lines"></i> Report History</h2>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search by industry, hazard, or location...">
+            <button onclick="filterReports()"><i class="fa fa-search"></i> Search</button>
+        </div>
+        <table id="reportTable">
             <tr><th>Date</th><th>Industry</th><th>Hazard</th><th>Location</th><th>Download</th></tr>
-            <tr><td>2026-03-01</td><td>Construction</td><td>Heights</td><td>Sydney</td><td><button class="download-btn">PDF</button></td></tr>
-            <tr><td>2026-02-20</td><td>Manufacturing</td><td>Machinery</td><td>Melbourne</td><td><button class="download-btn">PDF</button></td></tr>
+            <tr><td>2026-03-01</td><td>Construction</td><td>Heights</td><td>Sydney</td><td><button class="download-btn"><i class="fa fa-file-pdf"></i> PDF</button></td></tr>
+            <tr><td>2026-02-20</td><td>Manufacturing</td><td>Machinery</td><td>Melbourne</td><td><button class="download-btn"><i class="fa fa-file-pdf"></i> PDF</button></td></tr>
         </table>
     </div>
+    <script>
+        function filterReports() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const table = document.getElementById('reportTable');
+            for (let i = 1; i < table.rows.length; i++) {
+                const row = table.rows[i];
+                const industry = row.cells[1].textContent.toLowerCase();
+                const hazard = row.cells[2].textContent.toLowerCase();
+                const location = row.cells[3].textContent.toLowerCase();
+                if (
+                    industry.includes(input) ||
+                    hazard.includes(input) ||
+                    location.includes(input) ||
+                    input === ''
+                ) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        }
+    </script>
 </body>
 </html>
