@@ -1,7 +1,7 @@
 # Inspection Workflow Engine for Australian WHS
-from backend.risk.hazard_library import HAZARDS
-from backend.risk.risk_matrix import calculate_risk
-from backend.risk.control_recommender import recommend_controls
+from ..risk.hazard_library import HAZARDS
+from ..risk.risk_matrix import calculate_risk
+from ..risk.control_recommender import recommend_controls
 
 def run_safety_workflow(site_data):
     hazards = detect_hazards(site_data)
