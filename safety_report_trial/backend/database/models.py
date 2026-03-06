@@ -35,14 +35,17 @@ class Project(Base):
 	created_at = Column(DateTime)
 	reports = relationship("Report", back_populates="project")
 
+
+# Standalone Report model
+class Report(Base):
 	__tablename__ = "reports"
-	id = Column(Integer, primary_key=True)
+	id = Column(Integer, primary_key=True, index=True)
 	project_id = Column(Integer, ForeignKey("projects.id"))
 	project = relationship("Project", back_populates="reports")
 	content = Column(String)
-	severity = Column(Integer, default=1)      # 1=Minor, 2=Moderate, 3=Major, 4=Catastrophic
-	likelihood = Column(Integer, default=1)   # 1=Rare, 2=Unlikely, 3=Possible, 4=Likely, 5=Almost Certain
-	created_at = Column(DateTime)
+	severity = Column(Integer)
+	likelihood = Column(Integer)
+	created_at = Column(DateTime, default=datetime.utcnow)
 
 class Usage(Base):
 	__tablename__ = "usage"
