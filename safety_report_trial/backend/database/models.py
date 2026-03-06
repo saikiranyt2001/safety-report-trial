@@ -53,6 +53,6 @@ class Usage(Base):
 	reports = Column(Integer, default=0)
 	cost = Column(Integer, default=0)
 	report_id = Column(Integer, ForeignKey("reports.id"), nullable=True)
-	created_at = Column(DateTime, default=datetime.datetime.utcnow)
+	created_at = Column(DateTime, default=datetime.utcnow)
 	user = relationship("User")
 	report = relationship("Report")
