@@ -1,14 +1,13 @@
 from backend.workflow.safety_pipeline import run_safety_workflow
-from backend.utils.logger import logger
+from backend.services.report_agent import generate_structured_report
+
 
 def generate_report(data):
-    try:
-        logger.info("Running safety workflow")
-        result = run_safety_workflow(data)
-        return result
-    except Exception as e:
-        logger.error(f"Report generation failed: {e}")
-        return {
-            "status": "error",
-            "message": "Report generation failed"
-        }
+    workflow_output = run_safety_workflow(data)
+    return generate_structured_report(
+        data,
+        workflow_output["hazards"],
+        workflow_output["risks"],
+        workflow_output["controls"],
+        workflow_output["compliance"]
+    )
