@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import os
 import openai
+from backend.database.database import engine
+from backend.database.models import Base
 
 from backend.api.routes_reports import router as report_router
 from backend.api.routes_analytics import router as analytics_router
@@ -13,6 +15,9 @@ app = FastAPI(title="AI Safety Platform")
 
 # OpenAI key
 openai.api_key = os.getenv("OPENAI_API_KEY")
+
+# Create tables
+Base.metadata.create_all(bind=engine)
 
 # CORS
 app.add_middleware(
