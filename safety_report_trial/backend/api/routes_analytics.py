@@ -9,5 +9,7 @@ def get_safety_metrics():
     return {
         "total_hazards": 12,
         "high_risk": 3,
-        "compliance_score": 87
+        "compliance_score": 87,
+        "near_misses": 2,
+        "incident_rate": 0.08
     }
