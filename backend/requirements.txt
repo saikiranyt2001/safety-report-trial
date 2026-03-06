@@ -3,9 +3,7 @@ uvicorn
 openai
 python-docx
 python-multipart
-langchain
 faiss-cpu
-sentence-transformers
 sqlalchemy
 passlib
 bcrypt
