@@ -1,4 +1,3 @@
-
 from fastapi import FastAPI, HTTPException, Depends, status, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -9,6 +8,9 @@ import os
 from passlib.hash import bcrypt
 from safety_report_trial.backend.api.routes_reports import router as report_router
 from safety_report_trial.backend.api.routes_analytics import router as analytics_router
+from safety_report_trial.backend.api.routes_admin import router as admin_router
+from safety_report_trial.backend.api.routes_uploads import router as uploads_router
+from safety_report_trial.backend.api.routes_validation import router as validation_router
 from safety_report_trial.backend.workflow.inspection_engine import run_safety_workflow
 from safety_report_trial.backend.agents.hazard_agent import identify_hazards
 from safety_report_trial.backend.agents.risk_agent import assess_risk
@@ -108,8 +110,10 @@ from prometheus_fastapi_instrumentator import Instrumentator
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from safety_report_trial.backend.api.routes_reports import router as report_router
-
-
+from safety_report_trial.backend.api.routes_analytics import router as analytics_router
+from safety_report_trial.backend.api.routes_admin import router as admin_router
+from safety_report_trial.backend.api.routes_uploads import router as uploads_router
+from safety_report_trial.backend.api.routes_validation import router as validation_router
 
 app = FastAPI()
 
@@ -137,21 +141,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-
-from safety_report_trial.backend.auth.jwt_handler import create_access_token, create_refresh_token, verify_refresh_token
-from safety_report_trial.backend.database.models import User
-from safety_report_trial.backend.database.database import SessionLocal
-from fastapi import HTTPException
-from fastapi.security import OAuth2PasswordRequestForm
-from passlib.hash import bcrypt
-from fastapi import Depends
-from fastapi import status
-
-
 app.include_router(report_router)
 app.include_router(analytics_router)
-
+app.include_router(admin_router)
+app.include_router(uploads_router)
+app.include_router(validation_router)
 
 # Login endpoint with access and refresh tokens
 @app.post("/login")
