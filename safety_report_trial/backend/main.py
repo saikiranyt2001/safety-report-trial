@@ -34,3 +34,7 @@ app.include_router(validation_router)
 @app.get("/")
 def home():
     return {"message": "AI Safety Platform Running"}
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
