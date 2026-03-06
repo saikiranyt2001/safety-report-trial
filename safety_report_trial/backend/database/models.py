@@ -1,32 +1,6 @@
-# Audit model
-class Audit(Base):
-	__tablename__ = "audits"
-	id = Column(Integer, primary_key=True)
-	project_id = Column(Integer, ForeignKey("projects.id"))
-	completed = Column(Integer, default=0)  # 1=completed, 0=not completed
-	created_at = Column(DateTime)
-	project = relationship("Project")
-
-# Checklist item model
-class ChecklistItem(Base):
-	__tablename__ = "checklist_items"
-	id = Column(Integer, primary_key=True)
-	project_id = Column(Integer, ForeignKey("projects.id"))
-	completed = Column(Integer, default=0)  # 1=completed, 0=not completed
-	created_at = Column(DateTime)
-	project = relationship("Project")
-
-# Regulatory requirement model
-class RegulatoryRequirement(Base):
-	__tablename__ = "regulatory_requirements"
-	id = Column(Integer, primary_key=True)
-	project_id = Column(Integer, ForeignKey("projects.id"))
-	met = Column(Integer, default=0)  # 1=met, 0=not met
-	created_at = Column(DateTime)
-	project = relationship("Project")
-
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Enum
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Enum
+from sqlalchemy.orm import relationship, declarative_base
+from datetime import datetime
 from .database import Base
 import enum
 
