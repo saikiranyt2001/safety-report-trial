@@ -21,6 +21,7 @@ from safety_report_trial.backend.services.usage_tracker import track_usage
 from safety_report_trial.backend.utils.logger import logger
 from safety_report_trial.backend.auth.jwt_handler import create_access_token, create_refresh_token, verify_refresh_token
 from safety_report_trial.backend.vision.hazard_detector import detect_ppe
+from safety_report_trial.backend.database.models import User, Report, Project, Company
 
 app = FastAPI()
 
@@ -46,10 +47,6 @@ async def chat(data: ChatRequest):
     )
     return {"reply": response.choices[0].message.content.strip()}
 # Analytics endpoint
-from safety_report_trial.backend.database.models import Report, Project
-from safety_report_trial.backend.database.database import SessionLocal
-from sqlalchemy import func
-
 @app.get("/analytics/{company_id}")
 async def analytics(company_id: int):
     db = SessionLocal()
@@ -58,13 +55,6 @@ async def analytics(company_id: int):
     db.close()
     return {"total_projects": total_projects, "total_reports": total_reports}
 # Company and project management endpoints
-from safety_report_trial.backend.database.models import Company, Project
-from safety_report_trial.backend.database.database import SessionLocal
-from pydantic import BaseModel
-
-class CompanyCreate(BaseModel):
-    name: str
-
 @app.post("/companies")
 async def create_company(data: CompanyCreate):
     db = SessionLocal()
