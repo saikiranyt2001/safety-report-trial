@@ -17,15 +17,14 @@ class Company(Base):
 	id = Column(Integer, primary_key=True)
 	name = Column(String, unique=True, nullable=False)
 
-	users = relationship("User", back_populates="company")
-	projects = relationship("Project", back_populates="company")
+	users = relationship("User", back_populates="company", cascade="all, delete")
+	projects = relationship("Project", back_populates="company", cascade="all, delete")
 
 
-class User(Base):
 	__tablename__ = "users"
 
 	id = Column(Integer, primary_key=True)
-	username = Column(String, unique=True, nullable=False)
+	username = Column(String, unique=True, nullable=False, index=True)
 	password_hash = Column(String, nullable=False)
 	role = Column(Enum(RoleEnum), default=RoleEnum.worker, nullable=False)
 
@@ -48,11 +47,10 @@ class Project(Base):
 	reports = relationship("Report", back_populates="project")
 
 
-class Report(Base):
 	__tablename__ = "reports"
 
 	id = Column(Integer, primary_key=True, index=True)
-	project_id = Column(Integer, ForeignKey("projects.id"))
+	project_id = Column(Integer, ForeignKey("projects.id"), index=True)
 
 	project = relationship("Project", back_populates="reports")
 

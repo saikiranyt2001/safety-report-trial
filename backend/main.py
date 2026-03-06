@@ -3,11 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 import os
 import openai
 
-from backend.routers.reports import router as report_router
-from backend.routers.analytics import router as analytics_router
-from backend.routers.admin import router as admin_router
-from backend.routers.uploads import router as uploads_router
-from backend.routers.validation import router as validation_router
+from backend.api.routes_reports import router as report_router
+from backend.api.routes_analytics import router as analytics_router
+from backend.api.routes_admin import router as admin_router
+from backend.api.routes_uploads import router as uploads_router
+from backend.api.routes_validation import router as validation_router
 
 app = FastAPI(title="AI Safety Platform")
 
