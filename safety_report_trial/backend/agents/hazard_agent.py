@@ -3,7 +3,21 @@
 try:
     from ..risk.hazard_library import HAZARDS
 except ImportError:
-    HAZARDS = {}
+    HAZARDS = {
+        "construction": [
+            "working at height",
+            "falling objects",
+            "electrical hazard"
+        ],
+        "warehouse": [
+            "forklift collision",
+            "manual lifting injury"
+        ],
+        "manufacturing": [
+            "machine entanglement",
+            "chemical exposure"
+        ]
+    }
 
 def identify_hazards(site_type: str):
     site_type = site_type.lower()
