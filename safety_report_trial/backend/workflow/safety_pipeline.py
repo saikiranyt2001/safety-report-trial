@@ -1,9 +1,9 @@
 # Safety Workflow Engine for Industrial Safety Platform
-from backend.risk.hazard_library import get_hazards
-from backend.risk.risk_matrix import calculate_risk
-from backend.risk.control_recommender import recommend_controls
-from backend.rag.whs_regulations import get_regulation
-from backend.services.report_agent import generate_structured_report
+from ..risk.hazard_library import get_hazards
+from ..risk.risk_matrix import calculate_risk
+from ..risk.control_recommender import recommend_controls
+from ..rag.whs_regulations import get_regulation
+from ..services.report_agent import generate_structured_report
 
 
 def run_safety_pipeline(data):

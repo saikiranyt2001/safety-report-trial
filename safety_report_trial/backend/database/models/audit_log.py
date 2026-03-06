@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
-from backend.database.database import Base
+from ..database import Base
 import datetime
 
 class AuditLog(Base):

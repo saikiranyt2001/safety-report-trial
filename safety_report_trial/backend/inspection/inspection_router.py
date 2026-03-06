@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from backend.inspection.inspection_service import create_inspection, get_inspections
-from backend.inspection.inspection_schema import Inspection
+from .inspection_service import create_inspection, get_inspections
+from .inspection_schema import Inspection
 
 router = APIRouter()
 

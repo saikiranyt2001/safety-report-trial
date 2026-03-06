@@ -1,5 +1,5 @@
-from backend.database.models.audit_log import AuditLog
-from backend.database.database import SessionLocal
+from ..database.models.audit_log import AuditLog
+from ..database.database import SessionLocal
 import datetime
 
 def log_audit_action(user, action, project_id=None):

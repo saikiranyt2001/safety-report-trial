@@ -18,8 +18,8 @@ def get_monthly_usage(month=None):
 
 import datetime
 from sqlalchemy.orm import Session
-from backend.database.database import SessionLocal
-from backend.database.models import Usage
+from ..database.database import SessionLocal
+from ..database.models import Usage
 
 def track_usage(user_id, tokens, report_id=None, cost=None):
     month = datetime.datetime.now().strftime('%Y-%m')

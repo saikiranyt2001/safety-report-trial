@@ -1,6 +1,6 @@
 # AI Safety Advisor Agent
-from backend.risk.hazard_library import HAZARDS
-from backend.rag.whs_regulations import get_regulation
+from ..risk.hazard_library import HAZARDS
+from ..rag.whs_regulations import get_regulation
 
 def analyze_site(site_type, observations):
     hazards = HAZARDS.get(site_type, [])
