@@ -1,9 +1,9 @@
-#done
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 import os
-import openai
+
+print("🚀 FastAPI server starting...")
 
 from backend.api.routes_reports import router as report_router
 from backend.api.routes_analytics import router as analytics_router
@@ -13,9 +13,6 @@ from backend.api.routes_validation import router as validation_router
 from backend.api.routes_auth import router as auth_router
 
 app = FastAPI(title="AI Safety Platform")
-
-# OpenAI
-openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # CORS
 app.add_middleware(
@@ -34,7 +31,6 @@ app.include_router(uploads_router, prefix="/api")
 app.include_router(validation_router, prefix="/api")
 app.include_router(auth_router, prefix="/api")
 
-
 # Static frontend
 if os.path.exists("frontend"):
     app.mount("/frontend", StaticFiles(directory="frontend"), name="frontend")
@@ -42,5 +38,3 @@ if os.path.exists("frontend"):
 @app.get("/")
 def home():
     return {"message": "AI Safety Platform Running"}
-
-    #hello  its me
