@@ -40,6 +40,7 @@ class Report(Base):
     id = Column(Integer, primary_key=True, index=True)
     project_id = Column(Integer, ForeignKey("projects.id"))
     project = relationship("Project", back_populates="reports")
+    company_id = Column(Integer, ForeignKey("companies.id"))  # Added for multi-company
     content = Column(String)
     severity = Column(Integer)
     likelihood = Column(Integer)
@@ -50,6 +51,7 @@ class Usage(Base):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     report_id = Column(Integer, ForeignKey("reports.id"), nullable=True)
+    company_id = Column(Integer, ForeignKey("companies.id"))  # Added for multi-company
     month = Column(String, nullable=False)
     tokens = Column(Integer, default=0)
     reports = Column(Integer, default=0)

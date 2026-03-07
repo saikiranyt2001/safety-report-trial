@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Report Chat</title>
+  <style>
+    body { font-family: Arial; background: #f4f6f9; margin: 0; }
+    .container { background: white; padding: 40px; border-radius: 10px; max-width: 600px; margin: 40px auto; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); }
+    h2 { margin-bottom: 30px; }
+    input, textarea { width: 100%; padding: 12px; margin-bottom: 18px; border-radius: 6px; border: 1px solid #ccc; font-size: 14px; }
+    button { width: 100%; padding: 14px; background: #2563eb; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; }
+    button:hover { background: #1d4ed8; }
+    #chatAnswer { margin-top: 20px; background: #e0e7ef; padding: 16px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Ask About a Safety Report</h2>
+    <input type="number" id="reportId" placeholder="Report ID">
+    <textarea id="chatQuestion" rows="4" placeholder="Ask a question about hazards or regulations..."></textarea>
+    <button onclick="askReportChat()">Ask</button>
+    <div id="chatAnswer"></div>
+    <a href="document_generation.html">Go to Document Generation</a>
+  </div>
+  <script>
+    function askReportChat() {
+      const reportId = document.getElementById('reportId').value;
+      const question = document.getElementById('chatQuestion').value;
+      fetch('/api/report-chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ report_id: parseInt(reportId), question })
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('chatAnswer').innerText = data.answer || 'No answer.';
+      });
+    }
+  </script>
+</body>
+</html>

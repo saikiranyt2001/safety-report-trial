@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "regulation": "Fall protection required.",
+    "category": "Work at Heights",
+    "reference": "WHS Regulation 123"
+  },
+  {
+    "id": 2,
+    "regulation": "Electrical safety standards must be followed.",
+    "category": "Electrical Safety",
+    "reference": "WHS Regulation 456"
+  },
+  {
+    "id": 3,
+    "regulation": "Machinery safety procedures must be implemented.",
+    "category": "Machinery Safety",
+    "reference": "WHS Regulation 789"
+  }
+]
