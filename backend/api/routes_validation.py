@@ -10,7 +10,7 @@ class ValidationRequest(BaseModel):
     hazard_list: list[str]
     regulation_list: list[str]
 
-@router.post("/api/validate-report")
+@router.post("/validate-report")
 async def validate_report(payload: ValidationRequest):
     try:
         agent = ValidationAgent(
