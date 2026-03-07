@@ -16,3 +16,4 @@ prometheus-fastapi-instrumentator
 opencv-python-headless
 pytest
 reportlab
+gunicorn
