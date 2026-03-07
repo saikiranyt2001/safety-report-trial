@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Report Chat</title>
+</head>
+<body>
+  <h2>Report Chat</h2>
+  <form id="chatForm">
+    <label>Report ID: <input type="text" name="report_id" required></label><br>
+    <label>Message: <input type="text" name="message" required></label><br>
+    <button type="submit">Send</button>
+  </form>
+  <div id="chatResult"></div>
+  <script>
+    document.getElementById('chatForm').onsubmit = async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const res = await fetch('/api/report-chat', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          report_id: form.report_id.value,
+          message: form.message.value
+        })
+      });
+      document.getElementById('chatResult').innerText = await res.text();
+    };
+  </script>
+</body>
+</html>

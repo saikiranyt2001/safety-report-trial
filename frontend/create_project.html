@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Project Creation</title>
+</head>
+<body>
+  <h2>Create Project</h2>
+  <form id="projectForm">
+    <label>Project Name: <input type="text" name="project_name" required></label><br>
+    <label>Location: <input type="text" name="location" required></label><br>
+    <button type="submit">Create</button>
+  </form>
+  <div id="result"></div>
+  <script>
+    document.getElementById('projectForm').onsubmit = async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const res = await fetch('/api/create-project', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          project_name: form.project_name.value,
+          location: form.location.value
+        })
+      });
+      document.getElementById('result').innerText = await res.text();
+    };
+  </script>
+</body>
+</html>

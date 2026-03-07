@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Report History</title>
+</head>
+<body>
+  <h2>Report History</h2>
+  <button onclick="loadReports()">Load Reports</button>
+  <ul id="reportList"></ul>
+  <script>
+    async function loadReports() {
+      const res = await fetch('/api/reports');
+      const reports = await res.json();
+      const list = document.getElementById('reportList');
+      list.innerHTML = '';
+      reports.forEach(r => {
+        const li = document.createElement('li');
+        li.textContent = `Report: ${r.title} | Date: ${r.date}`;
+        list.appendChild(li);
+      });
+    }
+  </script>
+</body>
+</html>

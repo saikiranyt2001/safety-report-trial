@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Image Hazard Analysis</title>
+</head>
+<body>
+  <h2>Analyze Image for Hazards</h2>
+  <form id="imageForm">
+    <label>Upload Image: <input type="file" name="image" accept="image/*" required></label><br>
+    <button type="submit">Analyze</button>
+  </form>
+  <div id="imageResult"></div>
+  <script>
+    document.getElementById('imageForm').onsubmit = async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const file = form.image.files[0];
+      const formData = new FormData();
+      formData.append('image', file);
+      const res = await fetch('/api/analyze-image', {
+        method: 'POST',
+        body: formData
+      });
+      document.getElementById('imageResult').innerText = await res.text();
+    };
+  </script>
+</body>
+</html>
