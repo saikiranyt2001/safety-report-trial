@@ -4,11 +4,11 @@ from fastapi.staticfiles import StaticFiles
 import os
 import openai
 
-from api.routes_reports import router as report_router
-from api.routes_analytics import router as analytics_router
-from api.routes_admin import router as admin_router
-from api.routes_uploads import router as uploads_router
-from api.routes_validation import router as validation_router
+from backend.api.routes_reports import router as report_router
+from backend.api.routes_analytics import router as analytics_router
+from backend.api.routes_admin import router as admin_router
+from backend.api.routes_uploads import router as uploads_router
+from backend.api.routes_validation import router as validation_router
 from backend.api.routes_auth import router as auth_router
 
 app = FastAPI(title="AI Safety Platform")
