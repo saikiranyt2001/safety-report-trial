@@ -14,3 +14,4 @@ requests
 beautifulsoup4
 prometheus-fastapi-instrumentator
 opencv-python-headless
+pytest
