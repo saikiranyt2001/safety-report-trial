@@ -1,3 +1,4 @@
+#done
 def identify_hazards(site_type):
     hazards = {
         "construction": [

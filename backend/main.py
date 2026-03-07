@@ -1,3 +1,4 @@
+#done
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -41,3 +42,5 @@ if os.path.exists("frontend"):
 @app.get("/")
 def home():
     return {"message": "AI Safety Platform Running"}
+
+    #hello  its me

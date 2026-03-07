@@ -25,3 +25,5 @@ def get_compliance_reference(hazards):
         refs = COMPLIANCE.get(h, ["General WHS Safety Duty"])
         references.extend(refs)
     return list(set(references))
+
+#done
