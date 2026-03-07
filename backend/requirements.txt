@@ -17,3 +17,8 @@ opencv-python-headless
 pytest
 reportlab
 gunicorn
+pydantic
+opencv-python
+psycopg2-binary
+redis
+celery
