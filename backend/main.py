@@ -33,8 +33,10 @@ app.include_router(uploads_router, prefix="/api")
 app.include_router(validation_router, prefix="/api")
 app.include_router(auth_router, prefix="/api")
 
-# Static files for frontend
-app.mount("/frontend", StaticFiles(directory="frontend"), name="frontend")
+
+# Static frontend
+if os.path.exists("frontend"):
+    app.mount("/frontend", StaticFiles(directory="frontend"), name="frontend")
 
 @app.get("/")
 def home():
