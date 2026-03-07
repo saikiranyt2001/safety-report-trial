@@ -7,6 +7,12 @@ from backend.agents.risk_agent import assess_risk
 from backend.agents.recommendation_agent import generate_recommendations
 from backend.agents.compliance_agent import get_compliance_reference
 
+from api.routes_reports import router as report_router
+from api.routes_analytics import router as analytics_router
+from api.routes_admin import router as admin_router
+from api.routes_uploads import router as uploads_router
+from api.routes_validation import router as validation_router
+
 agent_manager = AgentManager(
     identify_hazards,
     assess_risk,
