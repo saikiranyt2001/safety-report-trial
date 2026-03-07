@@ -22,3 +22,4 @@ opencv-python
 psycopg2-binary
 redis
 celery
+PyJWT==2.8.0
