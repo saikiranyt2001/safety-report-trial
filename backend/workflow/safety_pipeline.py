@@ -1,8 +1,8 @@
 #done
-from agents.hazard_agent import identify_hazards
-from agents.risk_agent import assess_risk
-from agents.recommendation_agent import generate_recommendations
-from agents.compliance_agent import get_compliance_reference
+from backend.agents.hazard_agent import identify_hazards
+from backend.agents.risk_agent import assess_risk
+from backend.agents.recommendation_agent import generate_recommendations
+from backend.agents.compliance_agent import get_compliance_reference
 
 
 def run_safety_workflow(data):

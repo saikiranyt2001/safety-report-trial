@@ -3,14 +3,25 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 import os
 
-print("🚀 FastAPI server starting...")
+print("🚀 Starting AI Safety Platform...")
 
-from backend.api.routes_reports import router as report_router
-from backend.api.routes_analytics import router as analytics_router
-from backend.api.routes_admin import router as admin_router
-from backend.api.routes_uploads import router as uploads_router
-from backend.api.routes_validation import router as validation_router
-from backend.api.routes_auth import router as auth_router
+try:
+    from backend.api.routes_reports import router as report_router
+    from backend.api.routes_analytics import router as analytics_router
+    from backend.api.routes_admin import router as admin_router
+    from backend.api.routes_uploads import router as uploads_router
+    from backend.api.routes_validation import router as validation_router
+    from backend.api.routes_auth import router as auth_router
+    print("✅ Routers imported successfully")
+except Exception as e:
+    print("❌ Router import error:", e)
+    raise
+
+
+# Step 2 — Check environment variables
+openai_api_key = os.getenv("OPENAI_API_KEY")
+if not openai_api_key:
+    print("⚠️  OPENAI_API_KEY environment variable is missing. Some OpenAI SDK versions may crash.")
 
 app = FastAPI(title="AI Safety Platform")
 
