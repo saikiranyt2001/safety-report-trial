@@ -13,5 +13,4 @@ pypdf
 requests
 beautifulsoup4
 prometheus-fastapi-instrumentator
-ultralytics
 opencv-python-headless
