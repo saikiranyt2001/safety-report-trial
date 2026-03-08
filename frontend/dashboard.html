@@ -1,40 +1,91 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Dashboard</title>
+<title>AI Safety Dashboard</title>
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-gray-100">
+
 <!-- NAVBAR -->
-<nav class="bg-blue-600 text-white p-4 flex justify-between">
+<nav class="bg-blue-600 text-white p-4 flex justify-between items-center">
+
 <h1 class="font-bold text-xl">AI Safety Platform</h1>
-<div class="space-x-6">
+
+<div class="space-x-6 flex items-center">
 <a href="index.html">Home</a>
 <a href="analyze_image.html">Analyze Image</a>
 <a href="generate_report.html">Generate Report</a>
+
+<button onclick="logoutUser()" class="bg-red-500 px-4 py-2 rounded">
+Logout
+</button>
 </div>
+
 </nav>
+
+<!-- MAIN -->
 <div class="p-10">
-<h2 class="text-3xl font-bold mb-8">
-Inspection Dashboard
-</h2>
+
+<h1 class="text-3xl font-bold mb-4">AI Safety Dashboard</h1>
+
+<p class="mb-6">
+Welcome <span id="username" class="font-semibold"></span>
+</p>
+
 <div class="grid grid-cols-3 gap-6">
-<div class="bg-white p-6 rounded shadow">
-<h3 class="text-gray-600">Total Reports</h3>
-<p class="text-3xl font-bold">120</p>
+
+<div class="bg-white p-6 rounded-xl shadow">
+<h3 class="text-gray-500">Total Reports</h3>
+<p class="text-3xl font-bold text-blue-600">24</p>
 </div>
-<div class="bg-white p-6 rounded shadow">
-<h3 class="text-gray-600">Hazards Detected</h3>
-<p class="text-3xl font-bold text-red-500">35</p>
+
+<div class="bg-white p-6 rounded-xl shadow">
+<h3 class="text-gray-500">Models Analyzed</h3>
+<p class="text-3xl font-bold text-blue-600">12</p>
 </div>
-<div class="bg-white p-6 rounded shadow">
-<h3 class="text-gray-600">Inspections</h3>
-<p class="text-3xl font-bold">58</p>
+
+<div class="bg-white p-6 rounded-xl shadow">
+<h3 class="text-gray-500">Compliance Score</h3>
+<p class="text-3xl font-bold text-green-600">92%</p>
 </div>
+
 </div>
+
+<div class="mt-10 space-x-4">
+
+<a href="analyze_image.html">
+<button class="bg-blue-600 text-white px-6 py-3 rounded">
+Analyze Image
+</button>
+</a>
+
+<a href="generate_report.html">
+<button class="bg-green-600 text-white px-6 py-3 rounded">
+Generate Report
+</button>
+</a>
+
 </div>
-<footer class="text-center text-gray-500 p-6">
-AI Safety Platform Dashboard
-</footer>
+
+</div>
+
+<script>
+
+const user = localStorage.getItem("username");
+
+if(!user){
+window.location.replace("login.html");
+}
+
+document.getElementById("username").innerText = user;
+
+function logoutUser(){
+localStorage.clear();
+window.location.replace("login.html");
+}
+
+</script>
+
 </body>
 </html>

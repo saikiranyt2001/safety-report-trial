@@ -1,59 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>AI Safety Platform</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-body{
-background-image:url("https://images.unsplash.com/photo-1581093458791-9d09f0c5c2f3");
-background-size:cover;
-background-position:center;
-background-attachment:fixed;
-}
-</style>
+	<meta charset="UTF-8">
+	<title>AI Safety Platform</title>
+	<link rel="stylesheet" href="css/style.css">
 </head>
-<body class="text-white">
-<!-- NAVBAR -->
-<nav class="bg-black bg-opacity-70 p-4 flex justify-between items-center">
-<h1 class="text-2xl font-bold">AI Safety Platform</h1>
-<div class="space-x-6">
-<a href="dashboard.html" class="hover:text-blue-400">Dashboard</a>
-<a href="analyze_image.html" class="hover:text-blue-400">Analyze Image</a>
-<a href="generate_report.html" class="hover:text-blue-400">Generate Report</a>
-<a href="#" class="hover:text-blue-400">Reports</a>
-</div>
-</nav>
-<!-- HERO SECTION -->
-<div class="flex items-center justify-center h-screen text-center">
-<div class="bg-black bg-opacity-60 p-10 rounded-xl">
-<h2 class="text-4xl font-bold mb-6">
-AI Powered Safety Inspection
-</h2>
-<p class="mb-8 text-gray-200">
-Generate safety reports and detect hazards automatically using AI.
-</p>
-<div class="space-x-4">
-<a href="dashboard.html"
-class="bg-blue-600 px-6 py-3 rounded hover:bg-blue-700">
-Open Dashboard
-</a>
-<a href="analyze_image.html"
-class="bg-green-600 px-6 py-3 rounded hover:bg-green-700">
-Analyze Image
-</a>
-<a href="generate_report.html"
-class="bg-purple-600 px-6 py-3 rounded hover:bg-purple-700">
-Generate Report
-</a>
-</div>
-</div>
-</div>
-<!-- FOOTER -->
-<footer class="bg-black bg-opacity-80 text-center p-4">
-<p class="text-gray-400">
-© 2026 AI Safety Platform | Powered by FastAPI
-</p>
-</footer>
+<body>
+<script>
+if (!localStorage.getItem("jwt_token")) {
+	window.location.href = "login.html";
+}
+</script>
+	<!-- NAVBAR -->
+	<div class="navbar">
+		<div class="logo">AI Safety</div>
+		<div class="nav-links">
+			<a href="index.html">Home</a>
+			<a href="dashboard.html">Dashboard</a>
+			<a href="generate_report.html">Reports</a>
+			<a href="upload.html">Upload</a>
+			<a href="analytics.html">Analytics</a>
+		</div>
+		<div class="nav-user" id="profileDropdown">
+			<span id="profileInfo"></span>
+			<button onclick="logoutUser()">Logout</button>
+		</div>
+	</div>
+	<!-- HERO -->
+	<section class="hero">
+		<h1>AI Safety Compliance Platform</h1>
+		<p>Generate automated AI safety reports for regulatory compliance.</p>
+		<a href="dashboard.html">
+			<button class="hero-btn">Open Dashboard</button>
+		</a>
+	</section>
+	<!-- FOOTER -->
+	<footer class="footer">
+		<p>© 2026 AI Safety Platform | Powered by FastAPI</p>
+	</footer>
+<script>
+function logoutUser() {
+	localStorage.removeItem("jwt_token");
+	window.location.href = "login.html";
+}
+
+// Fetch user profile and show dropdown
+async function loadProfile() {
+	const token = localStorage.getItem("jwt_token");
+	if (!token) return;
+	try {
+		const res = await fetch("/api/me", {
+			headers: { Authorization: `Bearer ${token}` }
+		});
+		const data = await res.json();
+		document.getElementById("profileInfo").innerText = `${data.username} (${data.role})`;
+		// Example: hide admin links if not admin
+		if (data.role !== "admin") {
+			// Hide admin-only links here
+		}
+	} catch (e) {
+		document.getElementById("profileInfo").innerText = "User";
+	}
+}
+loadProfile();
+</script>
 </body>
 </html>
