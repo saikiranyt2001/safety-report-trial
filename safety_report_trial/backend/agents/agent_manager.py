@@ -5,14 +5,17 @@ class AgentManager:
         self.recommendation_agent = recommendation_agent
         self.compliance_agent = compliance_agent
 
-    def run_analysis(self, site_type):
-        hazards = self.hazard_agent(site_type)
-        risks = self.risk_agent(hazards)
-        controls = self.recommendation_agent(hazards)
-        compliance = self.compliance_agent(hazards)
-        return {
-            "hazards": hazards,
-            "risks": risks,
-            "controls": controls,
-            "compliance": compliance
-        }
+    def run_analysis(self, site_type, site_data):
+        try:
+            hazards = self.hazard_agent(site_type, site_data)
+            risks = self.risk_agent(hazards)
+            controls = self.recommendation_agent(hazards)
+            compliance = self.compliance_agent(hazards)
+            return {
+                "hazards": hazards,
+                "risks": risks,
+                "controls": controls,
+                "compliance": compliance
+            }
+        except Exception as e:
+            return {"error": str(e)}
