@@ -1,19 +1,24 @@
+from backend.tasks import hazard_task, risk_task
+
 class AgentManager:
-    def __init__(self, hazard_agent, risk_agent, recommendation_agent, compliance_agent):
-        self.hazard_agent = hazard_agent
-        self.risk_agent = risk_agent
+    def __init__(self, recommendation_agent, compliance_agent):
         self.recommendation_agent = recommendation_agent
         self.compliance_agent = compliance_agent
 
-    def run_analysis(self, task, site_type, site_data):
+    def run_analysis(self, site_type, likelihood, severity):
         try:
-            hazards = self.hazard_agent(task, site_type, site_data)
-            risks = self.risk_agent(hazards)
+            hazard_job = hazard_task.delay(site_type)
+            hazards = hazard_job.get()
+
+            risk_job = risk_task.delay(likelihood, severity)
+            risk = risk_job.get()
+
             controls = self.recommendation_agent(hazards)
             compliance = self.compliance_agent(hazards)
+
             return {
                 "hazards": hazards,
-                "risks": risks,
+                "risk": risk,
                 "controls": controls,
                 "compliance": compliance
             }

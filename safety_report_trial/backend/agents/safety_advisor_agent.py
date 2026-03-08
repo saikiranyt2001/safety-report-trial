@@ -4,12 +4,21 @@ from ..rag.whs_regulations import get_regulation
 
 def analyze_site(site_type, observations):
     hazards = HAZARDS.get(site_type, [])
-    risks = {h: "High" for h in hazards}  # Example risk
+
+    risks = {}
     recommendations = []
+
     for h in hazards:
-        recommendations.append(f"Review procedures for {h}")
+        risks[h] = "High"
+
+        if h.lower() in observations.lower():
+            recommendations.append(f"Immediate action required for {h}")
+        else:
+            recommendations.append(f"Review procedures for {h}")
+
     return {
         "top_risks": hazards,
+        "risk_levels": risks,
         "recommendations": recommendations,
         "regulations": [get_regulation(h) for h in hazards]
     }

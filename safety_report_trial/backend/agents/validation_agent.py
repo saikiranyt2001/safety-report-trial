@@ -13,17 +13,32 @@ class ValidationAgent:
 
     def validate_report(self, report_text):
         issues = []
+        text = report_text.lower()
+
         if not report_text.strip():
             return ["Report text is empty."]
-        # Check for missing hazards
+
+        # Section checks
+        if "hazards:" not in text:
+            issues.append("Hazards section missing.")
+        if "controls:" not in text:
+            issues.append("Controls section missing.")
+        if "regulations:" not in text:
+            issues.append("Regulations section missing.")
+        if "recommendations:" not in text:
+            issues.append("Recommendations section missing.")
+
+        if len(report_text.strip()) < 100:
+            issues.append("Report too short.")
+
+        # Original checks
         if self.hazard_list:
             missing = [
                 hazard for hazard in self.hazard_list
-                if hazard.lower() not in report_text.lower()
+                if hazard.lower() not in text
             ]
             if missing:
                 issues.append(f"Missing hazards: {', '.join(missing)}")
-        # Check for invalid regulation references
         if self.regulation_list:
             invalid_refs = []
             matches = re.findall(r'Regulation\s*([A-Za-z0-9\-]+)', report_text)
@@ -32,14 +47,11 @@ class ValidationAgent:
                     invalid_refs.append(match)
             if invalid_refs:
                 issues.append(f"Invalid regulation references: {', '.join(invalid_refs)}")
-        # Check for incomplete controls
-        if "controls:" in report_text.lower():
-            parts = report_text.lower().split("controls:")
+        if "controls:" in text:
+            parts = text.split("controls:")
             controls_section = parts[1] if len(parts) > 1 else ""
             if len(controls_section.strip()) < 20:
                 issues.append("Controls section appears incomplete.")
-        else:
-            issues.append("Controls section missing.")
         return issues
 
 # Example usage:
