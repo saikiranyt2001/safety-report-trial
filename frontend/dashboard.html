@@ -13,9 +13,12 @@
 <h1 class="font-bold text-xl">AI Safety Platform</h1>
 
 <div class="space-x-6 flex items-center">
-<a href="index.html">Home</a>
-<a href="analyze_image.html">Analyze Image</a>
-<a href="generate_report.html">Generate Report</a>
+<a href="dashboard.html">Dashboard</a>
+<a href="pages/analyze_image.html">Analyze Image</a>
+<a href="pages/generate_report.html">Generate Report</a>
+<a href="pages/report_history.html">Report History</a>
+<a href="pages/analytics.html">Analytics</a>
+<a href="pages/risk_assessment.html">Risk Assessment</a>
 
 <button onclick="logoutUser()" class="bg-red-500 px-4 py-2 rounded">
 Logout
@@ -37,30 +40,30 @@ Welcome <span id="username" class="font-semibold"></span>
 
 <div class="bg-white p-6 rounded-xl shadow">
 <h3 class="text-gray-500">Total Reports</h3>
-<p class="text-3xl font-bold text-blue-600">24</p>
+<p id="reports" class="text-3xl font-bold text-blue-600">...</p>
 </div>
 
 <div class="bg-white p-6 rounded-xl shadow">
 <h3 class="text-gray-500">Models Analyzed</h3>
-<p class="text-3xl font-bold text-blue-600">12</p>
+<p id="models" class="text-3xl font-bold text-blue-600">...</p>
 </div>
 
 <div class="bg-white p-6 rounded-xl shadow">
 <h3 class="text-gray-500">Compliance Score</h3>
-<p class="text-3xl font-bold text-green-600">92%</p>
+<p id="score" class="text-3xl font-bold text-green-600">...</p>
 </div>
 
 </div>
 
 <div class="mt-10 space-x-4">
 
-<a href="analyze_image.html">
-<button class="bg-blue-600 text-white px-6 py-3 rounded">
+<a href="pages/analyze_image.html">
+<button class="bg-blue-600 text-white px-6 py-3 rounded mr-4">
 Analyze Image
 </button>
 </a>
 
-<a href="generate_report.html">
+<a href="pages/generate_report.html">
 <button class="bg-green-600 text-white px-6 py-3 rounded">
 Generate Report
 </button>
@@ -70,21 +73,21 @@ Generate Report
 
 </div>
 
-<script>
-
-const user = localStorage.getItem("username");
-
-if(!user){
-window.location.replace("login.html");
-}
-
 document.getElementById("username").innerText = user;
-
-function logoutUser(){
-localStorage.clear();
-window.location.replace("login.html");
+<script src="js/auth.js"></script>
+<script src="js/api.js"></script>
+<script>
+checkAuth();
+const user = localStorage.getItem("username");
+document.getElementById("username").innerText = user;
+async function loadStats(){
+	const res = await fetch("/api/analytics");
+	const data = await res.json();
+	document.getElementById("reports").innerText = data.total_reports;
+	document.getElementById("models").innerText = data.models;
+	document.getElementById("score").innerText = data.compliance;
 }
-
+loadStats();
 </script>
 
 </body>

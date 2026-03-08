@@ -1,1 +1,155 @@
-<!-- Analytics Page -->
+<!DOCTYPE html>
+<html>
+<head>
+<title>Analytics</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body class="bg-gray-100">
+
+<div class="flex">
+
+<!-- SIDEBAR -->
+
+<div class="w-64 bg-blue-700 text-white min-h-screen p-6">
+
+<h2 class="text-2xl font-bold mb-8">AI Safety</h2>
+
+<a href="../dashboard.html" class="block mb-4">Dashboard</a>
+<a href="analyze_image.html" class="block mb-4">Analyze Image</a>
+<a href="generate_report.html" class="block mb-4">Generate Report</a>
+<a href="report_history.html" class="block mb-4">Report History</a>
+<a href="analytics.html" class="block mb-4 font-bold">Analytics</a>
+
+</div>
+
+<!-- MAIN CONTENT -->
+
+<div class="flex-1 p-10">
+
+<h1 class="text-3xl font-bold mb-6">Analytics</h1>
+
+<!-- METRIC CARDS -->
+
+<div class="grid grid-cols-3 gap-6 mb-10">
+
+<div class="bg-white p-6 rounded-xl shadow">
+<h3 class="text-gray-500">Reports Generated</h3>
+<p class="text-3xl font-bold">240</p>
+</div>
+
+<div class="bg-white p-6 rounded-xl shadow">
+<h3 class="text-gray-500">Average Risk Score</h3>
+<p class="text-3xl font-bold text-red-500">42%</p>
+</div>
+
+<div class="bg-white p-6 rounded-xl shadow">
+<h3 class="text-gray-500">Models Evaluated</h3>
+<p class="text-3xl font-bold text-blue-600">18</p>
+</div>
+
+</div>
+
+
+<!-- CHARTS -->
+
+<div class="grid grid-cols-2 gap-8">
+
+<!-- RISK DISTRIBUTION -->
+
+<div class="bg-white p-6 rounded-xl shadow">
+
+<h3 class="mb-4 font-bold">Risk Distribution</h3>
+
+<canvas id="riskChart"></canvas>
+
+</div>
+
+
+<!-- REPORT TREND -->
+
+<div class="bg-white p-6 rounded-xl shadow">
+
+<h3 class="mb-4 font-bold">Reports Trend</h3>
+
+<canvas id="trendChart"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+const riskChart = new Chart(
+
+document.getElementById("riskChart"),
+
+{
+type: "doughnut",
+
+data: {
+
+labels: ["Low Risk", "Medium Risk", "High Risk"],
+
+datasets: [{
+
+data: [120, 80, 40],
+
+backgroundColor: [
+
+"#22c55e",
+"#facc15",
+"#ef4444"
+
+]
+
+}]
+
+}
+
+}
+
+);
+
+
+const trendChart = new Chart(
+
+document.getElementById("trendChart"),
+
+{
+type: "line",
+
+data: {
+
+labels: ["Jan","Feb","Mar","Apr","May","Jun"],
+
+datasets: [{
+
+label: "Reports Generated",
+
+data: [20,35,50,60,80,95],
+
+borderColor: "#2563eb",
+
+fill: false
+
+}]
+
+}
+
+}
+
+);
+
+</script>
+
+</body>
+</html>

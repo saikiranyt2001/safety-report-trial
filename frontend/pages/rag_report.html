@@ -1,1 +1,120 @@
-<!-- RAG Report Page -->
+<!DOCTYPE html>
+<html>
+<head>
+<title>RAG Safety Report</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+<div class="flex">
+
+<!-- SIDEBAR -->
+
+<div class="w-64 bg-blue-700 text-white min-h-screen p-6">
+
+<h2 class="text-2xl font-bold mb-8">AI Safety</h2>
+
+<a href="../dashboard.html" class="block mb-4">Dashboard</a>
+<a href="analyze_image.html" class="block mb-4">Analyze Image</a>
+<a href="generate_report.html" class="block mb-4">Generate Report</a>
+<a href="rag_report.html" class="block mb-4 font-bold">RAG Report</a>
+<a href="report_history.html" class="block mb-4">Report History</a>
+<a href="analytics.html" class="block mb-4">Analytics</a>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="flex-1 p-10">
+
+<h1 class="text-3xl font-bold mb-6">RAG Safety Report</h1>
+
+<p class="text-gray-600 mb-8">
+Generate an AI safety report using contextual documents.
+</p>
+
+
+<!-- INPUT CARD -->
+
+<div class="bg-white p-8 rounded-xl shadow max-w-xl">
+
+<label class="block mb-2 font-semibold">
+Paste document or context
+</label>
+
+<textarea
+id="context"
+rows="6"
+class="w-full border p-3 rounded mb-4"
+placeholder="Paste safety guidelines, model documentation, or logs..."
+></textarea>
+
+
+<button
+onclick="generateRAGReport()"
+class="bg-purple-600 text-white px-6 py-3 rounded hover:bg-purple-700"
+>
+Generate AI Report
+</button>
+
+</div>
+
+
+<!-- RESULT -->
+
+<div id="result" class="mt-10 hidden">
+
+<h2 class="text-xl font-bold mb-4">
+AI Generated Report
+</h2>
+
+<div class="bg-white p-6 rounded shadow max-w-xl">
+
+<p id="ragOutput" class="text-gray-700"></p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+async function generateRAGReport(){
+
+const context = document.getElementById("context").value;
+
+if(!context){
+
+alert("Please provide context");
+return;
+
+}
+
+const response = await fetch(
+"http://localhost:8000/rag-report",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body: JSON.stringify({context:context})
+}
+);
+
+const data = await response.json();
+
+document.getElementById("ragOutput").innerText = data.report;
+
+document.getElementById("result").classList.remove("hidden");
+
+}
+
+</script>
+
+</body>
+</html>

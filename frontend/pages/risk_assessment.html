@@ -1,1 +1,124 @@
-<!-- Risk Assessment Page -->
+<!DOCTYPE html>
+<html>
+<head>
+<title>Risk Assessment</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="../js/auth.js"></script>
+</head>
+<body class="bg-gray-100">
+<script>checkAuth();</script>
+<div class="flex">
+
+<!-- SIDEBAR -->
+
+<div class="w-64 bg-blue-700 text-white min-h-screen p-6">
+
+<h2 class="text-2xl font-bold mb-8">AI Safety</h2>
+
+<a href="../dashboard.html" class="block mb-4">Dashboard</a>
+<a href="analyze_image.html" class="block mb-4">Analyze Image</a>
+<a href="generate_report.html" class="block mb-4">Generate Report</a>
+<a href="rag_report.html" class="block mb-4">RAG Report</a>
+<a href="report_history.html" class="block mb-4">Report History</a>
+<a href="analytics.html" class="block mb-4">Analytics</a>
+<a href="recommendations.html" class="block mb-4">Recommendations</a>
+<a href="risk_assessment.html" class="block mb-4 font-bold">Risk Assessment</a>
+
+</div>
+
+<!-- MAIN CONTENT -->
+
+<div class="flex-1 p-10">
+
+<h1 class="text-3xl font-bold mb-6">Risk Assessment</h1>
+
+<p class="text-gray-600 mb-8">
+Assess risks for your AI model or system.
+</p>
+
+<!-- INPUT FORM -->
+
+<div class="bg-white p-8 rounded-xl shadow max-w-xl">
+
+<label class="block mb-2 font-semibold">Project Name</label>
+<input
+id="project"
+class="w-full border p-2 rounded mb-4"
+placeholder="Enter project name"
+/>
+
+<label class="block mb-2 font-semibold">Model Name</label>
+<input
+id="model"
+class="w-full border p-2 rounded mb-4"
+placeholder="Enter model"
+/>
+
+<label class="block mb-2 font-semibold">Risk Category</label>
+
+<select id="riskType" class="w-full border p-2 rounded mb-4">
+
+<option>Data Privacy</option>
+<option>Model Bias</option>
+<option>Security</option>
+<option>Safety</option>
+
+</select>
+
+<button
+onclick="assessRisk()"
+class="bg-red-600 text-white px-6 py-3 rounded hover:bg-red-700"
+>
+Assess Risk
+</button>
+
+</div>
+
+<!-- RESULT -->
+
+<div id="result" class="mt-10 hidden">
+
+<h2 class="text-xl font-bold mb-4">Risk Result</h2>
+
+<div class="bg-white p-6 rounded shadow max-w-xl">
+
+<p><b>Project:</b> <span id="outProject"></span></p>
+<p><b>Model:</b> <span id="outModel"></span></p>
+<p><b>Risk Category:</b> <span id="outType"></span></p>
+
+<p class="mt-4 font-bold text-red-600 text-lg">
+Risk Score: <span id="riskScore"></span>
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function assessRisk(){
+
+const project = document.getElementById("project").value;
+const model = document.getElementById("model").value;
+const type = document.getElementById("riskType").value;
+
+document.getElementById("outProject").innerText = project;
+document.getElementById("outModel").innerText = model;
+document.getElementById("outType").innerText = type;
+
+const score = Math.floor(Math.random()*100);
+
+document.getElementById("riskScore").innerText = score + "%";
+
+document.getElementById("result").classList.remove("hidden");
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,1 +1,129 @@
-<!-- Recommendations Page -->
+<!DOCTYPE html>
+<html>
+<head>
+<title>Safety Recommendations</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+<div class="flex">
+
+<!-- SIDEBAR -->
+
+<div class="w-64 bg-blue-700 text-white min-h-screen p-6">
+
+<h2 class="text-2xl font-bold mb-8">AI Safety</h2>
+
+<a href="../dashboard.html" class="block mb-4">Dashboard</a>
+<a href="analyze_image.html" class="block mb-4">Analyze Image</a>
+<a href="generate_report.html" class="block mb-4">Generate Report</a>
+<a href="rag_report.html" class="block mb-4">RAG Report</a>
+<a href="report_history.html" class="block mb-4">Report History</a>
+<a href="analytics.html" class="block mb-4">Analytics</a>
+<a href="recommendations.html" class="block mb-4 font-bold">Recommendations</a>
+
+</div>
+
+<!-- MAIN CONTENT -->
+
+<div class="flex-1 p-10">
+
+<h1 class="text-3xl font-bold mb-6">Safety Recommendations</h1>
+
+<p class="text-gray-600 mb-8">
+AI-generated recommendations to improve system safety.
+</p>
+
+
+<!-- RECOMMENDATION CARDS -->
+
+<div class="grid grid-cols-2 gap-6">
+
+<div class="bg-white p-6 rounded-xl shadow">
+
+<div class="flex justify-between items-center mb-2">
+<h3 class="font-bold">Improve Model Monitoring</h3>
+<span class="bg-red-500 text-white px-3 py-1 rounded text-sm">
+High Priority
+</span>
+</div>
+
+<p class="text-gray-600 mb-4">
+Implement real-time monitoring to detect unsafe model outputs and anomalies.
+</p>
+
+<button class="bg-blue-600 text-white px-4 py-2 rounded">
+Apply Recommendation
+</button>
+
+</div>
+
+
+<div class="bg-white p-6 rounded-xl shadow">
+
+<div class="flex justify-between items-center mb-2">
+<h3 class="font-bold">Add Input Validation</h3>
+<span class="bg-yellow-500 text-white px-3 py-1 rounded text-sm">
+Medium Priority
+</span>
+</div>
+
+<p class="text-gray-600 mb-4">
+Add strict validation to prevent harmful prompts or malicious input.
+</p>
+
+<button class="bg-blue-600 text-white px-4 py-2 rounded">
+Apply Recommendation
+</button>
+
+</div>
+
+
+<div class="bg-white p-6 rounded-xl shadow">
+
+<div class="flex justify-between items-center mb-2">
+<h3 class="font-bold">Enable Logging</h3>
+<span class="bg-green-500 text-white px-3 py-1 rounded text-sm">
+Low Priority
+</span>
+</div>
+
+<p class="text-gray-600 mb-4">
+Store logs of model decisions for future audits and safety investigations.
+</p>
+
+<button class="bg-blue-600 text-white px-4 py-2 rounded">
+Apply Recommendation
+</button>
+
+</div>
+
+
+<div class="bg-white p-6 rounded-xl shadow">
+
+<div class="flex justify-between items-center mb-2">
+<h3 class="font-bold">Human Oversight</h3>
+<span class="bg-red-500 text-white px-3 py-1 rounded text-sm">
+High Priority
+</span>
+</div>
+
+<p class="text-gray-600 mb-4">
+Add human review for high-risk AI outputs before deployment.
+</p>
+
+<button class="bg-blue-600 text-white px-4 py-2 rounded">
+Apply Recommendation
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>

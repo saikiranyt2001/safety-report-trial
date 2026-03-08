@@ -1,1 +1,134 @@
-<!-- Generate Report Page -->
+<!DOCTYPE html>
+<html>
+<head>
+<title>Generate Report</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+<div class="flex">
+
+<!-- SIDEBAR -->
+
+<div class="w-64 bg-blue-700 text-white min-h-screen p-6">
+
+<h2 class="text-2xl font-bold mb-8">AI Safety</h2>
+
+<a href="../dashboard.html" class="block mb-4">Dashboard</a>
+<a href="analyze_image.html" class="block mb-4">Analyze Image</a>
+<a href="generate_report.html" class="block mb-4 font-bold">Generate Report</a>
+<a href="report_history.html" class="block mb-4">Report History</a>
+<a href="analytics.html" class="block mb-4">Analytics</a>
+
+</div>
+
+
+<!-- MAIN CONTENT -->
+
+<div class="flex-1 p-10">
+
+<h1 class="text-3xl font-bold mb-6">Generate Report</h1>
+
+<p class="text-gray-600 mb-8">
+Fill in details to generate a safety report.
+</p>
+
+
+<!-- REPORT FORM -->
+
+<div class="bg-white p-8 rounded-xl shadow max-w-xl">
+
+<label class="block mb-2 font-semibold">Project Name</label>
+<input
+id="project"
+class="w-full border p-2 rounded mb-4"
+placeholder="Enter project name"
+/>
+
+<label class="block mb-2 font-semibold">Model Name</label>
+<input
+id="model"
+class="w-full border p-2 rounded mb-4"
+placeholder="Enter AI model"
+/>
+
+<label class="block mb-2 font-semibold">Risk Level</label>
+
+<select id="risk" class="w-full border p-2 rounded mb-4">
+
+<option>Low</option>
+<option>Medium</option>
+<option>High</option>
+
+</select>
+
+<label class="block mb-2 font-semibold">Description</label>
+
+<textarea
+id="description"
+class="w-full border p-2 rounded mb-4"
+rows="4"
+placeholder="Describe the risk or safety issue"
+></textarea>
+
+
+<button
+onclick="generateReport()"
+class="bg-green-600 text-white px-6 py-3 rounded hover:bg-green-700"
+>
+Generate Report
+</button>
+
+</div>
+
+
+<!-- REPORT OUTPUT -->
+
+<div id="reportOutput" class="mt-10 hidden">
+
+<h2 class="text-xl font-bold mb-4">Generated Report</h2>
+
+<div class="bg-white p-6 rounded shadow max-w-xl">
+
+<p><b>Project:</b> <span id="outProject"></span></p>
+
+<p><b>Model:</b> <span id="outModel"></span></p>
+
+<p><b>Risk Level:</b> <span id="outRisk"></span></p>
+
+<p class="mt-2"><b>Description:</b></p>
+
+<p id="outDesc" class="text-gray-700"></p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+function generateReport(){
+
+const project = document.getElementById("project").value;
+const model = document.getElementById("model").value;
+const risk = document.getElementById("risk").value;
+const description = document.getElementById("description").value;
+
+document.getElementById("outProject").innerText = project;
+document.getElementById("outModel").innerText = model;
+document.getElementById("outRisk").innerText = risk;
+document.getElementById("outDesc").innerText = description;
+
+document.getElementById("reportOutput").classList.remove("hidden");
+
+}
+
+</script>
+
+</body>
+</html>

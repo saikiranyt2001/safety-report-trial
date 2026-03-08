@@ -1,42 +1,29 @@
-# AI Safety Report Generator
+# AI Safety Report Platform
 
-![Python](https://img.shields.io/badge/python-3.10-blue)
-![FastAPI](https://img.shields.io/badge/FastAPI-framework-green)
-![License](https://img.shields.io/badge/license-MIT-orange)
-
-AI-powered platform that automatically generates industrial safety compliance reports using multi-agent AI and Retrieval-Augmented Generation (RAG).
+AI-powered compliance and safety analysis platform.
 
 ## Features
 
-- AI hazard analysis
-- Automated safety report generation
-- Compliance with safety regulations (Australian WHS)
-- PDF and DOCX report export
-- Multi-agent AI architecture
-- FastAPI backend
-- Inspection workflow
-- KPI dashboard & analytics
-- AI Safety Advisor (chat)
-- Docker deployment
+- AI image risk analysis
+- Automated safety reports
+- Compliance monitoring
+- AI chat assistant
+- Risk assessment engine
 
-## Architecture
+## Tech Stack
 
-```mermaid
-graph TD
-  A[User Input] --> B[FastAPI API]
-  B --> C[AI Agents]
-  C --> D[RAG Engine]
-  D --> E[Safety Regulations]
-  C --> F[Report Generator]
-  F --> G[PDF Export]
-```
+Frontend:
+- HTML
+- TailwindCSS
+- JavaScript
 
-## Example Output
+Backend:
+- FastAPI
+- Python
 
-### AI INDUSTRIAL SAFETY REPORT
-
-Site: Construction Site A
-Date: 12 March 2026
+Deployment:
+- Docker
+- GitHub Actions
 
 Hazards Identified
 • Working at height
