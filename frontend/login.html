@@ -67,7 +67,7 @@
         const username = document.getElementById("username").value.trim();
         const password = document.getElementById("password").value.trim();
         try{
-            const res = await fetch("http://127.0.0.1:9000/api/simple-login",{
+            const res = await fetch("http://127.0.0.1:9000/api/login",{
                 method:"POST",
                 headers:{
                     "Content-Type":"application/json"
@@ -78,8 +78,8 @@
                 })
             });
             const data = await res.json();
-            if(data.success){
-                localStorage.setItem("auth_token","true");
+            if(data.access_token){
+                localStorage.setItem("auth_token", data.access_token);
                 localStorage.setItem("username", username);
                 window.location.replace("dashboard.html");
             }else{
@@ -89,6 +89,12 @@
             alert("Server error. Please try again.");
         }
     }
+
+    document.addEventListener("keypress",function(e){
+        if(e.key === "Enter"){
+            loginUser();
+        }
+    });
 
     // UX: Allow Enter key to trigger login
     document.addEventListener("keypress",function(e){
