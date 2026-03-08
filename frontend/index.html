@@ -7,62 +7,48 @@
 </head>
 <body>
 <script>
+
 if (!localStorage.getItem("jwt_token")) {
 	window.location.href = "login.html";
 }
-</script>
-	<!-- NAVBAR -->
-	<div class="navbar">
-		<div class="logo">AI Safety</div>
-		<div class="nav-links">
-			<a href="index.html">Home</a>
-			<a href="dashboard.html">Dashboard</a>
-			<a href="generate_report.html">Reports</a>
-			<a href="upload.html">Upload</a>
-			<a href="analytics.html">Analytics</a>
-		</div>
-		<div class="nav-user" id="profileDropdown">
-			<span id="profileInfo"></span>
-			<button onclick="logoutUser()">Logout</button>
-		</div>
-	</div>
-	<!-- HERO -->
-	<section class="hero">
-		<h1>AI Safety Compliance Platform</h1>
-		<p>Generate automated AI safety reports for regulatory compliance.</p>
-		<a href="dashboard.html">
-			<button class="hero-btn">Open Dashboard</button>
-		</a>
-	</section>
-	<!-- FOOTER -->
-	<footer class="footer">
-		<p>© 2026 AI Safety Platform | Powered by FastAPI</p>
-	</footer>
-<script>
+
 function logoutUser() {
 	localStorage.removeItem("jwt_token");
 	window.location.href = "login.html";
 }
 
-// Fetch user profile and show dropdown
 async function loadProfile() {
+
 	const token = localStorage.getItem("jwt_token");
+
 	if (!token) return;
+
 	try {
+
 		const res = await fetch("/api/me", {
 			headers: { Authorization: `Bearer ${token}` }
 		});
-		const data = await res.json();
-		document.getElementById("profileInfo").innerText = `${data.username} (${data.role})`;
-		// Example: hide admin links if not admin
-		if (data.role !== "admin") {
-			// Hide admin-only links here
+
+		if (!res.ok) {
+			logoutUser();
+			return;
 		}
+
+		const data = await res.json();
+
+		document.getElementById("profileInfo").innerText =
+			`${data.username} (${data.role})`;
+
 	} catch (e) {
+
 		document.getElementById("profileInfo").innerText = "User";
+
 	}
+
 }
+
 loadProfile();
+
 </script>
 </body>
 </html>

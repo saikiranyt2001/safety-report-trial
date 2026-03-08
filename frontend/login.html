@@ -49,8 +49,8 @@
         }
     </style>
     <script>
-        const user = localStorage.getItem("username");
-        if (user) {
+        const token = localStorage.getItem("auth_token");
+        if(token){
             window.location.replace("dashboard.html");
         }
     </script>
@@ -66,25 +66,40 @@
     async function loginUser(){
         const username = document.getElementById("username").value.trim();
         const password = document.getElementById("password").value.trim();
-        const res = await fetch("http://127.0.0.1:9000/api/simple-login",{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify({
-                username:username,
-                password:password
-            })
-        });
-        const data = await res.json();
-        if(data.success){
-            localStorage.setItem("auth_token","true");
-            localStorage.setItem("username",username);
-            window.location.replace("dashboard.html");
-        }else{
-            alert("Invalid username or password");
+        try{
+            const res = await fetch("http://127.0.0.1:9000/api/simple-login",{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                })
+            });
+            const data = await res.json();
+            if(data.success){
+                localStorage.setItem("auth_token","true");
+                localStorage.setItem("username", username);
+                window.location.replace("dashboard.html");
+            }else{
+                alert("Invalid username or password");
+            }
+        }catch(err){
+            alert("Server error. Please try again.");
         }
     }
+
+    // UX: Allow Enter key to trigger login
+    document.addEventListener("keypress",function(e){
+        if(e.key === "Enter"){
+            loginUser();
+        }
+    });
+
+    // SECURITY NOTE: For production, backend should return a JWT token:
+    // { "access_token": "..." }
+    // Then store: localStorage.setItem("auth_token", data.access_token);
     </script>
 </body>
 </html>

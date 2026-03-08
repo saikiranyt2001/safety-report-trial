@@ -73,21 +73,33 @@ Generate Report
 
 </div>
 
-document.getElementById("username").innerText = user;
+<!-- SCRIPTS -->
+
 <script src="js/auth.js"></script>
 <script src="js/api.js"></script>
+
 <script>
+
 checkAuth();
+
 const user = localStorage.getItem("username");
-document.getElementById("username").innerText = user;
+
+document.getElementById("username").innerText = user || "User";
+
 async function loadStats(){
-	const res = await fetch("/api/analytics");
-	const data = await res.json();
-	document.getElementById("reports").innerText = data.total_reports;
-	document.getElementById("models").innerText = data.models;
-	document.getElementById("score").innerText = data.compliance;
+
+const res = await fetch("/api/analytics");
+
+const data = await res.json();
+
+document.getElementById("reports").innerText = data.total_reports;
+document.getElementById("models").innerText = data.models;
+document.getElementById("score").innerText = data.compliance;
+
 }
+
 loadStats();
+
 </script>
 
 </body>

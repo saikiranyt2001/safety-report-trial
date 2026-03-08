@@ -22,24 +22,37 @@
     <a href="ai_report_chat.html">Go to AI Report Chat</a>
   </div>
   <script>
-    function loginUser() {
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-      fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
-      })
-      .then(res => res.json())
-      .then(data => {
+    async function loginUser() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      try {
+        const res = await fetch("/api/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
+        });
+        const data = await res.json();
         if (data.access_token) {
-          localStorage.setItem('jwt', data.access_token);
-          document.getElementById('loginStatus').innerText = 'Login successful!';
+          localStorage.setItem("jwt_token", data.access_token);
+          document.getElementById("loginStatus").innerText = "Login successful! Redirecting...";
+          setTimeout(() => {
+            window.location.href = "dashboard.html";
+          }, 1000);
         } else {
-          document.getElementById('loginStatus').innerText = 'Login failed.';
+          document.getElementById("loginStatus").innerText = "Invalid username or password";
         }
-      });
+      } catch (err) {
+        document.getElementById("loginStatus").innerText = "Server error";
+      }
     }
+
+    document.addEventListener("keypress", function(e) {
+      if (e.key === "Enter") {
+        loginUser();
+      }
+    });
   </script>
 </body>
 </html>
