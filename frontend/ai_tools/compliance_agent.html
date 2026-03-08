@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Compliance Agent - AI Safety Platform</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<script>
+if (!localStorage.getItem("jwt_token")) {
+    window.location.href = "login.html";
+}
+</script>
+    <!-- NAVBAR -->
+    <div class="navbar">
+        <div class="logo">AI Safety</div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="generate_report.html">Reports</a>
+            <a href="upload.html">Upload</a>
+            <a href="analytics.html">Analytics</a>
+            <a href="compliance_agent.html">Compliance</a>
+            <a href="risk_assessment.html">Risk</a>
+            <a href="recommendations.html">Recommendations</a>
+            <a href="ai_report_chat.html">Chatbot</a>
+            <a href="project_management.html">Projects</a>
+        </div>
+        <div class="nav-user">
+            <button onclick="logoutUser()">Logout</button>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Compliance Agent</h1>
+        <p>Check regulatory compliance and get recommendations.</p>
+    </div>
+<script>
+function logoutUser() {
+    localStorage.removeItem("jwt_token");
+    window.location.href = "login.html";
+}
+</script>
+</body>
+</html>

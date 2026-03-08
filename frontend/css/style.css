@@ -1,0 +1,87 @@
+/* Remove stray properties, ensure all CSS is inside selectors */
+/* Example button style */
+.btn {
+	border-radius:10px;
+	max-width:600px;
+	margin:auto;
+	cursor:pointer;
+}
+body{
+margin:0;
+font-family:Segoe UI, Arial;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
+}
+/* NAVBAR */
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 40px;
+background:rgba(0,0,0,0.4);
+backdrop-filter:blur(8px);
+}
+.logo{
+font-size:22px;
+font-weight:bold;
+color:#00c6ff;
+}
+.nav-links a{
+margin-left:25px;
+text-decoration:none;
+color:white;
+font-weight:500;
+}
+.nav-links a:hover{
+color:#00c6ff;
+}
+.nav-user button{
+background:#00c6ff;
+border:none;
+padding:8px 16px;
+border-radius:6px;
+color:white;
+cursor:pointer;
+}
+/* HERO */
+.hero{
+text-align:center;
+padding:120px 20px;
+}
+.hero h1{
+font-size:48px;
+}
+.hero p{
+font-size:18px;
+margin-top:10px;
+}
+.hero-btn{
+margin-top:30px;
+padding:12px 30px;
+border:none;
+background:#00c6ff;
+border-radius:8px;
+font-size:16px;
+cursor:pointer;
+}
+/* DASHBOARD */
+.dashboard{
+padding:40px;
+text-align:center;
+}
+.cards{
+display:flex;
+justify-content:center;
+gap:30px;
+margin-top:40px;
+}
+.card{
+background:rgba(255,255,255,0.1);
+padding:30px;
+border-radius:10px;
+width:200px;
+}
+.card p{
+font-size:30px;
+font-weight:bold;
+}
