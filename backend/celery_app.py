@@ -6,6 +6,16 @@ celery_app = Celery(
     backend="redis://localhost:6379/0"
 )
 
+celery_app.conf.update(
+    task_serializer="json",
+    result_serializer="json",
+    accept_content=["json"],
+    timezone="UTC",
+    enable_utc=True,
+    task_default_retry_delay=10,
+    task_max_retries=3,
+)
+
 celery_app.conf.task_routes = {
     "tasks.*": {"queue": "safety_queue"}
 }
