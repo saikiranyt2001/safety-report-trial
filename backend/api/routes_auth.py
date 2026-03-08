@@ -1,27 +1,22 @@
-from fastapi import APIRouter, Depends, HTTPException, Request
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi import APIRouter, Depends, HTTPException
+from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 from backend.database.models import User
 from backend.database.database import SessionLocal
+from datetime import datetime, timedelta
 import jwt
 import hashlib
 from pydantic import BaseModel
 
 SECRET_KEY = "your_secret_key"
+ALGORITHM = "HS256"
+
 router = APIRouter()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 class LoginData(BaseModel):
     username: str
     password: str
-
-# Simple demo login endpoint for frontend
-@router.post("/simple-login")
-async def simple_login(data: LoginData):
-    print(data.username, data.password)  # Debug print
-    if data.username.strip().lower() == "saikiran" and data.password.strip() == "1234":
-        return {"success": True}
-    return {"success": False}
 
 def get_db():
     db = SessionLocal()
@@ -30,36 +25,49 @@ def get_db():
     finally:
         db.close()
 
-def hash_password(password):
+def hash_password(password: str):
     return hashlib.sha256(password.encode()).hexdigest()
 
+# Signup
 @router.post("/signup")
-def signup(username: str, password: str, db: Session = Depends(get_db)):
-    if db.query(User).filter(User.username == username).first():
+def signup(data: LoginData, db: Session = Depends(get_db)):
+    if db.query(User).filter(User.username == data.username).first():
         raise HTTPException(status_code=400, detail="Username already exists")
-    user = User(username=username, password_hash=hash_password(password))
+
+    user = User(
+        username=data.username,
+        password_hash=hash_password(data.password)
+    )
+
     db.add(user)
     db.commit()
-    return {"msg": "User created"}
 
+    return {"message": "User created"}
+
+# Login
 @router.post("/login")
-async def login(data: dict):
-    if data["username"] == "admin" and data["password"] == "123":
-        token = jwt.encode(
-            {
-                "sub": data["username"],
-                "exp": datetime.utcnow() + timedelta(hours=2)
-            },
-            SECRET,
-            algorithm="HS256"
-        )
-        return {"access_token": token}
-    return {"error": "invalid login"}
+def login(data: LoginData, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.username == data.username).first()
 
+    if not user or user.password_hash != hash_password(data.password):
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+
+    token = jwt.encode(
+        {
+            "sub": user.username,
+            "exp": datetime.utcnow() + timedelta(hours=2)
+        },
+        SECRET_KEY,
+        algorithm=ALGORITHM
+    )
+
+    return {"access_token": token, "token_type": "bearer"}
+
+# Get profile
 @router.get("/me")
 def get_profile(token: str = Depends(oauth2_scheme)):
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
-        return {"username": payload["sub"], "role": payload["role"]}
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        return {"username": payload["sub"]}
     except jwt.PyJWTError:
         raise HTTPException(status_code=401, detail="Invalid token")

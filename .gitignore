@@ -1,15 +1,17 @@
-# Ignore Python virtual environments
-.venv/
-
-# Ignore environment variables
-.env
-
-# Ignore Python cache files
+# Python
 __pycache__/
 *.pyc
+*.pyo
 
-# Ignore VS Code settings
+# Virtual environment
+.venv/
+env/
+
+# Pytest cache
+.pytest_cache/
+
+# VS Code
 .vscode/
 
-# Ignore other sensitive files
+# Logs
 *.log
