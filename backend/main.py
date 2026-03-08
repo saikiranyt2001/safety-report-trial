@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 import os
+from prometheus_fastapi_instrumentator import Instrumentator
 
 print("🚀 Starting AI Safety Platform...")
 
@@ -24,6 +25,7 @@ if not openai_api_key:
     print("⚠️  OPENAI_API_KEY environment variable is missing. Some OpenAI SDK versions may crash.")
 
 app = FastAPI(title="AI Safety Platform")
+Instrumentator().instrument(app).expose(app)
 
 # CORS
 app.add_middleware(

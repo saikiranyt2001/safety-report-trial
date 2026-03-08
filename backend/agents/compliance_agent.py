@@ -1,3 +1,13 @@
+def check_compliance():
+    checklist = get_compliance_checklist()
+    results = {}
+    for item in checklist:
+        results[item] = "✓" if validate_rule(item) else "✗"
+    return results
+
+def validate_rule(rule):
+    # placeholder logic
+    return True
 # Compliance Agent
 
 COMPLIANCE = {
