@@ -5,9 +5,9 @@ class AgentManager:
         self.recommendation_agent = recommendation_agent
         self.compliance_agent = compliance_agent
 
-    def run_analysis(self, site_type, site_data):
+    def run_analysis(self, task, site_type, site_data):
         try:
-            hazards = self.hazard_agent(site_type, site_data)
+            hazards = self.hazard_agent(task, site_type, site_data)
             risks = self.risk_agent(hazards)
             controls = self.recommendation_agent(hazards)
             compliance = self.compliance_agent(hazards)
